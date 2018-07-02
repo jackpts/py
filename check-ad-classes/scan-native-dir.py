@@ -58,6 +58,42 @@ def handle_styles_file(path):
     styles_array = []
     found = ''
 
+    def filter_classes(s_array):
+        # filter empty classes
+        flt = filter(None, s_array)
+
+        # filter separated by space & tab classes
+        # ['oem-logo img'] --> ['oem-logo', 'img']
+        flt_unspaced = []
+        for x in flt:
+            if ' ' in x or '\t' in x:
+                spaced_split = x.split(' ') if (' ' in x) else x.split('\t')
+                for ss in spaced_split:
+                    if ss not in flt_unspaced and ss.startswith('.'):
+                        flt_unspaced.append(ss[1:])
+            else:
+                flt_unspaced.append(x)
+        flt = flt_unspaced
+
+        # separate classes like 'disclaimer-content.hidden'
+        flt_dotted = []
+        for x in flt:
+            if '.' in x:
+                for ds in x.split('.'):
+                    if ds not in flt_dotted and ds not in flt:
+                        flt_dotted.append(ds)
+            else:
+                flt_dotted.append(x)
+        flt = flt_dotted
+
+        # get rid from :hover/:focus.. pseudo classes
+        flt = [p for p in flt if ':' not in p]
+
+        # filter collection classes like "[class^='icon-']"
+        flt = filter(lambda cl: not cl.startswith('[class'), flt)
+
+        return flt
+
     while True:
         line = f1.readline()
         if len(line) == 0:      # Нулевая длина обозначает конец файла (EOF)
@@ -78,12 +114,7 @@ def handle_styles_file(path):
     if not styles_array:
         print('Suddenly not classes found in this styles file!')
 
-    # print('styles_arrayUnique: ', list(set(styles_array)))
-    # Additional filter to get rid from :hover/:focus.. pseudo classes
-    result = [p for p in styles_array if ':' not in p]
-    # And filter empty classes
-    result = filter(None, result)
-    return result
+    return filter_classes(styles_array)
 
 
 def handle_template_file(path):
@@ -112,24 +143,26 @@ def handle_template_file(path):
 def check_diff(a, b):
     diff_array = list(set(a).union(set(b)) - set(a).intersection(set(b)))
     diff_styles = []
-    diff_templates = []
+    diff_template = []
     if diff_array:
         for d in diff_array:
             if d in a:
-                diff_templates.append(d)
+                diff_template.append(d)
             else:
                 diff_styles.append(d)
         # print('These classes exist only in Template: \n', diff_templates)
         # print('These classes exist only in Styles: \n', diff_styles)
     # else:
         # print('Congratulations! No differences found!')
-    diff_templ_string = ",".join(str(dt) for dt in diff_templates)
-    diff_styles_string = ",".join(str(ds) for ds in diff_styles)
-    return diff_templ_string, diff_styles_string
+    # diff_templ_string = ",".join(str(dt) for dt in diff_templates)
+    # diff_styles_string = ",".join(str(ds) for ds in diff_styles)
+    # return diff_templ_string, diff_styles_string
+    return diff_template, diff_styles
 
 
 outputContent = []
-outputHeaders = ['adName', 'File', 'Differences']
+outputHeaders = ['adName/file', 'Differences']
+chunkSize = 5
 
 for s in subdirArr:
     stylesFilePath = s + stylesFile
@@ -140,7 +173,13 @@ for s in subdirArr:
     templateList = handle_template_file(templateFilePath)
     # print('Comparing subdir: ', s)
     d_template, d_styles = check_diff(templateList, stylesList)
-    outputContent.append([s[2:-1], stylesFile, d_template])
-    outputContent.append(['', templateFile, d_styles])
+    adName = s[2:]    # ./SRP/ --> SRP/
+    while len(d_template) > chunkSize:
+        outputContent.append([adName + 'template', d_template[:4]])
+        d_template = d_template[5:]
+    while len(d_styles) > chunkSize:
+        outputContent.append([adName + 'styles', d_styles[:4]])
+        d_styles = d_styles[5:]
 
+outputContent.sort()
 print(tabulate(outputContent, headers=outputHeaders, tablefmt="psql"))
