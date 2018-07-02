@@ -14,8 +14,14 @@ scanDir = '/home/jacky/git/libraries-adcreative-templates/units/native-ad-templa
 stylesFile = 'style.scss'
 templateFile = 'template.html'
 jsFile = 'index.js'
+styles_regex = '(\s|\t)*\.\w+(-?)(.+?)(\s?)\{'
+template_regex = r'class=[\"|\']([\w.(-|\s)?]+)*[\"|\'][\s+|>]'
 scanImports = False
 tableOutput = True
+
+outputContent = []
+outputHeaders = ['adName/file', 'Differences']
+chunkSize = 7
 
 if sys.version_info[0] < 3:
     warnings.warn('You need at least Python v.3 to run this script!', RuntimeWarning)
@@ -39,6 +45,7 @@ else:
 os.chdir(scanDir)
 subdirArr = glob('./*/')
 # ['./Build_and_Price_Wired/', './SRP/', './Article_Wired/', './Map_Mobile/', './Pricing_Module/',...]
+
 if not subdirArr:
     print('No subdirectories found in this scanDir path! Please set other path in var.')
     exit(0)
@@ -54,6 +61,7 @@ def is_file_exist(path, filetype):
 
 
 def handle_styles_file(path):
+    global styles_regex
     f1 = open(path, 'r')
     styles_array = []
     found = ''
@@ -100,24 +108,26 @@ def handle_styles_file(path):
             break
 
         try:
-            found = re.search('\.\w+(-?)(.+?)(\s?)\{', line).group(0)
+            found = re.search(styles_regex, line).group(0)
 
         except AttributeError:
             found = ''      # .class { } not found in line
 
         finally:
             if found and found not in styles_array:
-                found = found[:-1][1:].strip()                  # '.btn {' --> 'btn'
+                found = found.strip()[:-1][1:].strip()                  # '     .btn {' --> 'btn'
                 styles_array.append(found)
 
     f1.close()
     if not styles_array:
         print('Suddenly not classes found in this styles file!')
 
-    return filter_classes(styles_array)
+    styles_array = filter_classes(styles_array)
+    return list(set(styles_array))
 
 
 def handle_template_file(path):
+    global template_regex
     template_array = []
 
     with open(path, 'r') as f2:
@@ -126,7 +136,7 @@ def handle_template_file(path):
     f2.close()
 
     # class_data = re.split('class=[\"|\'](\w+(.+?)(\s?))*[\"|\']', template_data, flags=re.IGNORECASE)
-    class_data = re.findall(r'class=[\"|\']([\w.(-|\s)?]+)*[\"|\'][\s+|>]', template_data)
+    class_data = re.findall(template_regex, template_data)
 
     if not class_data:
         print('Suddenly not classes found in this template file!')
@@ -136,8 +146,7 @@ def handle_template_file(path):
         for ia in inner_array:
             ia and template_array.append(ia)     # ia and - filter empty classes
 
-    # print('template_arrayUnique: ', list(set(template_array)))
-    return template_array
+    return list(set(template_array))
 
 
 def check_diff(a, b):
@@ -160,9 +169,24 @@ def check_diff(a, b):
     return diff_template, diff_styles
 
 
-outputContent = []
-outputHeaders = ['adName/file', 'Differences']
-chunkSize = 5
+def format_output(name, array, file_type):
+    global chunkSize, outputContent
+    ad_name = name + file_type
+    line_counter = 0
+
+    while len(array) > chunkSize:
+        line_counter += 1
+        if line_counter > 1:
+            ad_name = ''
+        outputContent.append([ad_name, array[:chunkSize]])
+        array = array[chunkSize:]
+
+    line_counter += 1
+    if line_counter > 1:
+        ad_name = ''
+
+    array and outputContent.append([ad_name, array])
+
 
 for s in subdirArr:
     stylesFilePath = s + stylesFile
@@ -171,15 +195,13 @@ for s in subdirArr:
     stylesList = handle_styles_file(stylesFilePath)
     is_file_exist(templateFilePath, 'template')
     templateList = handle_template_file(templateFilePath)
-    # print('Comparing subdir: ', s)
     d_template, d_styles = check_diff(templateList, stylesList)
-    adName = s[2:]    # ./SRP/ --> SRP/
-    while len(d_template) > chunkSize:
-        outputContent.append([adName + 'template', d_template[:4]])
-        d_template = d_template[5:]
-    while len(d_styles) > chunkSize:
-        outputContent.append([adName + 'styles', d_styles[:4]])
-        d_styles = d_styles[5:]
 
-outputContent.sort()
+    adName = s[2:]     # ./SRP/ --> SRP
+    format_output(adName, d_template, 'template')
+    format_output(adName, d_styles, 'styles')
+
+    # outputContent.append([adName + 'template', d_template])
+    # outputContent.append([adName + 'styles', d_styles])
+
 print(tabulate(outputContent, headers=outputHeaders, tablefmt="psql"))
