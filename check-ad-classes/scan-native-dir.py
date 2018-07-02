@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+
 import re
 import sys 
 import warnings
@@ -9,6 +11,8 @@ scanDir = '/home/jacky/git/libraries-adcreative-templates/units/native-ad-templa
 stylesFile = 'style.scss'
 templateFile = 'template.html'
 jsFile = 'index.js'
+scanImports = False
+tableOutput = True
 
 if sys.version_info[0] < 3:
     warnings.warn('You need at least Python v.3 to run this script!', RuntimeWarning)
@@ -17,6 +21,17 @@ if sys.version_info[0] < 3:
 if not os.path.isdir(scanDir):
     print('Directory {0} is not exists! Please check var scanDir in the script.'.format(scanDir))
     exit(1)
+
+# check command line params
+if '--scan-imports' in sys.argv:
+    scanImports = True
+
+print('Check if prettytable module installed...'.format(), end=' ')
+if 'prettytable' in sys.modules:
+    print('Ok.')
+else:
+    print('Not. Please install PrettyTable module for better output (as a table) via: pip3 install PrettyTable --user')
+    tableOutput = False
 
 os.chdir(scanDir)
 subdirArr = glob('./*/')
@@ -120,9 +135,9 @@ for s in subdirArr:
     is_file_exist(templateFilePath, 'template')
     templateList = handle_template_file(templateFilePath)
     # print('Comparing subdir: ', s)
-    diff_template, diff_styles = check_diff(templateList, stylesList)
-    outputTable.add_row([s[2:-1], stylesFile, diff_template])
-    outputTable.add_row(['', templateFile, diff_styles])
+    d_template, d_styles = check_diff(templateList, stylesList)
+    outputTable.add_row([s[2:-1], stylesFile, d_template])
+    outputTable.add_row(['', templateFile, d_styles])
 
 outputTable.align = "l"
 print(outputTable)
