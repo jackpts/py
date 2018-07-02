@@ -5,7 +5,10 @@ import sys
 import warnings
 import os
 from glob import glob
-from prettytable import PrettyTable   # pip3 install PrettyTable --user
+
+# https://pypi.org/project/tabulate/
+# pip3 install tabulate --user
+from tabulate import tabulate
 
 scanDir = '/home/jacky/git/libraries-adcreative-templates/units/native-ad-templates/'
 stylesFile = 'style.scss'
@@ -26,8 +29,8 @@ if not os.path.isdir(scanDir):
 if '--scan-imports' in sys.argv:
     scanImports = True
 
-print('Check if prettytable module installed...'.format(), end=' ')
-if 'prettytable' in sys.modules:
+print('Check if tabulate module installed...'.format(), end=' ')
+if 'tabulate' in sys.modules:
     print('Ok.')
 else:
     print('Not. Please install PrettyTable module for better output (as a table) via: pip3 install PrettyTable --user')
@@ -125,7 +128,8 @@ def check_diff(a, b):
     return diff_templ_string, diff_styles_string
 
 
-outputTable = PrettyTable(['adName', 'File', 'Differences'])
+outputContent = []
+outputHeaders = ['adName', 'File', 'Differences']
 
 for s in subdirArr:
     stylesFilePath = s + stylesFile
@@ -136,8 +140,7 @@ for s in subdirArr:
     templateList = handle_template_file(templateFilePath)
     # print('Comparing subdir: ', s)
     d_template, d_styles = check_diff(templateList, stylesList)
-    outputTable.add_row([s[2:-1], stylesFile, d_template])
-    outputTable.add_row(['', templateFile, d_styles])
+    outputContent.append([s[2:-1], stylesFile, d_template])
+    outputContent.append(['', templateFile, d_styles])
 
-outputTable.align = "l"
-print(outputTable)
+print(tabulate(outputContent, headers=outputHeaders, tablefmt="psql"))
