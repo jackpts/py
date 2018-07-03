@@ -23,7 +23,7 @@ outLOG = False
 subdir_arr = []
 outputContent = []
 outputHeaders = ['adName/file', 'Differences']
-chunkSize = 7
+chunkSize = 4
 
 
 def ready_steady():
@@ -180,6 +180,7 @@ def check_diff(a, b):
 
 def format_output(name, array, file_type):
     global chunkSize, outputContent
+
     ad_name = name + file_type
     line_counter = 0
 
@@ -200,6 +201,19 @@ def format_output(name, array, file_type):
         outputContent.append([ad_name, '---== no differences ==---'])
 
 
+def do_output():
+    global tableOutput, outputContent, outputHeaders
+
+    print()                         # just empty line
+    if tableOutput:
+        print(tabulate(outputContent, headers=outputHeaders, tablefmt="psql"))
+    else:
+        for oc in outputContent:
+            if bool(''.join(oc[:1])):
+                print(oc[:1])
+            print('\t\t', oc[1:])
+
+
 def init_main():
     global subdir_arr, stylesFile, templateFile
     
@@ -216,10 +230,7 @@ def init_main():
         format_output(ad_name, d_template, 'template')
         format_output(ad_name, d_styles, 'styles')
 
-        # outputContent.append([adName + 'template', d_template])
-        # outputContent.append([adName + 'styles', d_styles])
-
-    print(tabulate(outputContent, headers=outputHeaders, tablefmt="psql"))
+    do_output()
 
 
 ready_steady()
