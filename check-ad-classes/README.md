@@ -6,7 +6,8 @@ Scripts for edmunds.com site, repo: libraries-adcreative-templates
 2. scan-native-dir
 - scans native ad dir for sub-directories with templates/styles and checks them for redundant/missed classes
 
-a) Need to install `Python v.3` to operate with RE(gex) module
+a) Need to install `Python v.3` to operate with RE(gex) module;
+
 b) Need to install `tabulate` module to be able to output in table format:
 
     pip3 install tabulate --user
