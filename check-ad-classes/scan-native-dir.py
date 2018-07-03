@@ -17,47 +17,56 @@ jsFile = 'index.js'
 styles_regex = '(\s|\t)*\.\w+(-?)(.+?)(\s?)\{'
 template_regex = r'class=[\"|\']([\w.(-|\s)?]+)*[\"|\'][\s+|>]'
 scanImports = False
+scanJS = False
 tableOutput = True
-
+outLOG = False
+subdir_arr = []
 outputContent = []
 outputHeaders = ['adName/file', 'Differences']
 chunkSize = 7
 
-if sys.version_info[0] < 3:
-    warnings.warn('You need at least Python v.3 to run this script!', RuntimeWarning)
-    exit(0)
 
-if not os.path.isdir(scanDir):
-    print('Directory {0} is not exists! Please check var scanDir in the script.'.format(scanDir))
-    exit(1)
+def ready_steady():
+    global scanImports, scanJS, outLOG, tableOutput, subdir_arr
 
-# check command line params
-if '--scan-imports' in sys.argv:
-    scanImports = True
+    if sys.version_info[0] < 3:
+        warnings.warn('You need at least Python v.3 to run this script!', RuntimeWarning)
+        exit(0)
 
-print('Check if tabulate module installed...'.format(), end=' ')
-if 'tabulate' in sys.modules:
-    print('Ok.')
-else:
-    print('Not. Please install PrettyTable module for better output (as a table) via: pip3 install PrettyTable --user')
-    tableOutput = False
-
-os.chdir(scanDir)
-subdirArr = glob('./*/')
-# ['./Build_and_Price_Wired/', './SRP/', './Article_Wired/', './Map_Mobile/', './Pricing_Module/',...]
-
-if not subdirArr:
-    print('No subdirectories found in this scanDir path! Please set other path in var.')
-    exit(0)
-
-
-def is_file_exist(path, filetype):
-    print('Checking if file with {0} exists [{1}]...'.format(filetype, path), end=' ')
-    if os.path.exists(path):
-        print('Ok!')
-    else:
-        print('Not! Check the path inside! Program exit.')
+    if not os.path.isdir(scanDir):
+        print('Directory {0} is not exists! Please check var scanDir in the script.'.format(scanDir))
         exit(1)
+
+    # check command line params
+    if '--scan-imports' in sys.argv:
+        scanImports = True
+    if '--scan-js' in sys.argv:
+        scanJS = True
+    if '--out-log' in sys.argv:
+        outLOG = True
+
+    print('Check if tabulate module installed...'.format(), end=' ')
+    if 'tabulate' in sys.modules:
+        print('Ok.')
+    else:
+        print('Not! Please install tabulate module for better output (as a table) via: pip3 install tabulate --user')
+        tableOutput = False
+
+    os.chdir(scanDir)
+    subdir_arr = glob('./*/')
+    # ['./Build_and_Price_Wired/', './SRP/', './Article_Wired/', './Map_Mobile/', './Pricing_Module/',...]
+
+    if not subdir_arr:
+        print('No subdirectories found in scanDir [{0}] path! Please set proper path in var.'.format(scanDir))
+        exit(0)
+
+
+def is_file_exist(path, file_type):
+    print('Checking if file with {0} exists [{1}]...'.format(file_type, path), end=' ')
+    if os.path.exists(path):
+        print('Ok.')
+    else:
+        print('Error! Please check the path: ', path)
 
 
 def handle_styles_file(path):
@@ -178,30 +187,42 @@ def format_output(name, array, file_type):
         line_counter += 1
         if line_counter > 1:
             ad_name = ''
-        outputContent.append([ad_name, array[:chunkSize]])
+        outputContent.append([ad_name, ', '.join(array[:chunkSize])])
         array = array[chunkSize:]
 
     line_counter += 1
     if line_counter > 1:
         ad_name = ''
 
-    array and outputContent.append([ad_name, array])
+    if array:
+        outputContent.append([ad_name, ', '.join(array)])
+    else:
+        outputContent.append([ad_name, '---== no differences ==---'])
 
 
-for s in subdirArr:
-    stylesFilePath = s + stylesFile
-    templateFilePath = s + templateFile
-    is_file_exist(stylesFilePath, 'styles')
-    stylesList = handle_styles_file(stylesFilePath)
-    is_file_exist(templateFilePath, 'template')
-    templateList = handle_template_file(templateFilePath)
-    d_template, d_styles = check_diff(templateList, stylesList)
+def init_main():
+    global subdir_arr, stylesFile, templateFile
+    
+    for s in subdir_arr:
+        styles_file_path = s + stylesFile
+        template_file_path = s + templateFile
+        is_file_exist(styles_file_path, 'styles')
+        styles_list = handle_styles_file(styles_file_path)
+        is_file_exist(template_file_path, 'template')
+        template_list = handle_template_file(template_file_path)
+        d_template, d_styles = check_diff(template_list, styles_list)
 
-    adName = s[2:]     # ./SRP/ --> SRP
-    format_output(adName, d_template, 'template')
-    format_output(adName, d_styles, 'styles')
+        ad_name = s[2:]  # ./SRP/ --> SRP
+        format_output(ad_name, d_template, 'template')
+        format_output(ad_name, d_styles, 'styles')
 
-    # outputContent.append([adName + 'template', d_template])
-    # outputContent.append([adName + 'styles', d_styles])
+        # outputContent.append([adName + 'template', d_template])
+        # outputContent.append([adName + 'styles', d_styles])
 
-print(tabulate(outputContent, headers=outputHeaders, tablefmt="psql"))
+    print(tabulate(outputContent, headers=outputHeaders, tablefmt="psql"))
+
+
+ready_steady()
+init_main()
+
+
