@@ -39,7 +39,6 @@ def ready_steady():
         warnings.warn('You need at least Python v.3 to run this script!', RuntimeWarning)
         exit(0)
     arguments = sys.argv[1:]
-    print('arguments=', arguments)
 
     # check command line params
     if '--scan-imports' in arguments:
@@ -48,9 +47,10 @@ def ready_steady():
         scanJS = True               # TODO
     if '--out-log' in arguments:
         outLOG = True               # TODO
+    if '--chunk-size' in arguments:
+         ccccccc = 1                # TODO
     if '--custom-path' in arguments:
         custom_path_index = arguments.index('--custom-path') + 1
-        print('custom_path_index==', custom_path_index)
         custom_path = arguments[custom_path_index]
         if custom_path:
             if not os.path.isdir(custom_path):

@@ -64,7 +64,10 @@ Checking if file with template exists [./VDP_Wired/template.html]... Ok.
 		 ['flex-wrap, display-3, display-6, py-0_75']
 		 ['h-100, mx-0_75, px-0_5, xsmall']
 		 ['text-gray-darker']
-		 
+
+['SRP_Amp/styles']
+
+		 ['--- nothing to compare, file not exists ---']
 ['Article_Wired/template']
 
 		 ['disclaimer-copy, jelly-bean, cta-body-text, flex-row']
@@ -76,33 +79,7 @@ Checking if file with template exists [./VDP_Wired/template.html]... Ok.
 		 ['pt-3_5, font-weight-normal, font-weight-bold, ml-3']
 		 ['mr-0_5, pb-1_5, mt-1_25, ml-0_25']
 		 ['pt-0_5, text-center']
-		 
-['Map_Mobile/template']
-
-		 ['px-1, disclaimer-copy, map-image, rounded']
-		 ['py-1, cta2']
-		 
-['Map_Mobile/styles']
-
-		 ['justify-content-center, text-gray-dark']
-['Medium_Rectangle_Amp/template']
-
-		 ['button-secondary, stretch, root-container, carousel-container']
-		 ['button, carousel, logo-img, carousel-item']
-		 ['footer, carousel-img']
-		 
-['Medium_Rectangle_Amp/styles']
-
-		 ['cta-container, hidden, persistent-disclaimer, mt-0_25']
-		 ['text-primary, d-block, mx-0_25, pt-1_75']
-		 ['disclaimer-button, d-none, oem-logo, font-weight-bold']
-		 ['d-flex, text-uppercase, jelly-bean, disclaimer-content']
-		 ['mr-0_25, justify-content-between, text-gray, my-0_5']
-		 ['disclaimer-close, card, disclaimer, display-5']
-		 ['py-1_5, cta, ml-0_25, px-1_5']
-		 ['text-center, xsmall, text-gray-darker, text-gray-dark']
-		 ['vehicle-block']
-		 
+		  
 ['Pricing_Module/template']
 
 		 ['justify-content-center, label2, disclaimer-copy, headline2']
@@ -116,24 +93,6 @@ Checking if file with template exists [./VDP_Wired/template.html]... Ok.
 
 		 ['msrp, disclaimer-text, ad-label, local']
 		 ['cta-text, disclaimer-img']
-['Pricing_Fresh_Core_Mobile/styles']
-
-		 ['d-none, display-5']
-['Conquest_YSC_Wired/template']
-
-		 ['disclaimer-text, logo, disclaimer-label, disclaimer-img']
-		 ['ad-label']
-['Conquest_YSC_Wired/styles']
-
-		 ['display-5, ml-0_5, align-items-center, mr-0_25']
-		 ['mt-1, mb-0_75']
-['Pricing_Fresh_Core_Wired/template']
-
-		 ['msrp, disclaimer-text, oem-logo, local']
-		 ['cta-text, ad-label']
-['Pricing_Fresh_Core_Wired/styles']
-
-		 ['logo-wrapper, display-5, d-none, logo']
 ['Build_and_Price_Mobile/template']
 
 		 ['disclaimer-copy, pt-1_75, ad-label, btn-link']
@@ -145,31 +104,7 @@ Checking if file with template exists [./VDP_Wired/template.html]... Ok.
 		 ['mr-0_5, mt-1_5, mb-1_5, no-custom-data']
 		 ['border-gray, color-swatch, mt-1_25, xsmall']
 		 ['mx-auto, border-1']
-['MPG_Wired/template']
-
-		 ['city, slider-wrapper, max-range, disclaimer-copy']
-		 ['cta, hwy, custom-data, cta2']
-		 ['mpg-calculator, weighted-average, min-range']
-['MPG_Wired/styles']
-
-		 ['d-none']
-['Map_Wired/template']
-
-		 ['px-1, disclaimer-copy, map-image, rounded']
-		 ['py-1, cta2, map']
-['Map_Wired/styles']
-
-		 ['justify-content-center']
-['Enhanced_Spotlight/template']
-
-		 ['disclaimer-text, photo-disclaimer, ad-label, vehicle-block']
-['Enhanced_Spotlight/styles']
-
-		 ['display-5']
-['Leaderboard/template']
-
-		 ['disclaimer-copy, headline2, cta4, cta2']
-		 ['cta1, cta3, ad-container']
+		 
 ['Leaderboard/styles']
 
 		 ['my-1, display-5, ml
@@ -181,11 +116,6 @@ Checking if file with template exists [./VDP_Wired/template.html]... Ok.
 ['Button/styles']
 
 		 ['hidden']
-['Incentives_Fresh_Core_Mobile/template']
-
-		 ['label-text, disclaimer-text, w-100, oem-logo']
-		 ['text-left, headline2, cta, headline']
-		 ['cta-text, ad-label, body-text, text-right']
 
 ['VDP_Wired/template']
 
@@ -197,3 +127,25 @@ Checking if file with template exists [./VDP_Wired/template.html]... Ok.
 		 ['mt-1_75, mt-2_25, mt-2, mr-0_25']
 		 ['mt-3, mt-1_5, mt-2_75, display-5']
 		 ['mt-1_25, mt-2_5']
+
+===========================================
+
+*Running with custom path param:*
+
+python scan-native-dir.py --custom-path /home/jacky/git/libraries-adcreative-templates/units/leaderboard
+
+Check if tabulate module installed... Ok.
+Checking if file with styles exists [./BMW_728x90/style.scss]... Ok.
+Checking if file with template exists [./BMW_728x90/template.html]... Ok.
+Checking if file with styles exists [./Cadillac_728x90/style.scss]... Ok.
+Checking if file with template exists [./Cadillac_728x90/template.html]... Ok.
+
+['BMW_728x90/template']
+		 ['--- no differences ---']
+['BMW_728x90/styles']
+		 ['--- no differences ---']
+['Cadillac_728x90/template']
+		 ['vehicle-content, vehicle-info, slider-text, vehicle-slider']
+		 ['slide-info, vehicle-slide']
+['Cadillac_728x90/styles']
+		 ['--- no differences ---']
