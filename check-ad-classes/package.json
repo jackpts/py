@@ -1,0 +1,21 @@
+{
+  "name": "libraries-adcreative-templates",
+  "version": "1.0.0",
+  "description": "Libraries Adcreative Templates Project",
+  "main": "local/index.js",
+  "scripts": {
+    "scan-classes": "python scan-classes.py --custom-path ./units/native-ad-templates/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "ssh://git@gitlab.vip.aws2:edmunds/libraries-adcreative-templates.git"
+  },
+  "keywords": [],
+  "license": "ISC",
+  "devDependencies": {
+
+  },
+  "dependencies": {
+
+  }
+}

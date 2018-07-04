@@ -1,0 +1,27 @@
+{
+    "name": "Leaderboard",
+    "dimensions": {
+        "width": "728",
+        "height": "90"
+    },
+    "fields": {
+        "image_id_custom_default": "//localhost:3000/units/leaderboard/Cadillac_728x90/images/vehicleimagesized.jpg",
+        "logo_image_id": "//localhost:3000/units/leaderboard/Cadillac_728x90/images/cad_vrt_rgb_smp_pos.png",
+        "button_text": "current offers",
+        "title": "martin automotive group",
+        "info_text_1": "Los Angeles, CA",
+        "info_text_2": "take comfort in superior craftmanship",
+        "tp_impression_tracker_1": "",
+        "logo_image_style": "height:90px;",
+        "display_fivestar": "true",
+        "disable_inventory": "true",
+        "fivestar_logo_url": "//static.ed.edmunds-media.com/edmunds-webassets/current/img/apps/dl/media/awards/five-star-81x35.png",
+        "dealer_click_default": "http://www.cadillac.com",
+        "dealer_cdd_id": "294851",
+        "product_set_id": "578569a0e4b07987e0511ef9",
+        "utm_params": "",
+        "cascade_id": "",
+        "click_tag_redirector": "",
+        "custom_default_image_id": ""
+    }
+}

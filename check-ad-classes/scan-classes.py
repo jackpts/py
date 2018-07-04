@@ -61,7 +61,7 @@ def ready_steady():
     if not os.path.isdir(scanDir):
         print('Directory {0} is not exists! \n Please check var scanDir in the script.'.format(scanDir))
         print('Or set custom path as command line parameter like this:')
-        print('python scan-native-dir.py --custom-path /home/jacky/git/libraries-adcreative-templates/units/leaderboard')
+        print('python scan-classes.py --custom-path /home/jacky/git/libraries-adcreative-templates/units/leaderboard')
         exit(1)
 
     print('Check if tabulate module installed...'.format(), end=' ')

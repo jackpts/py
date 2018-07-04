@@ -1,0 +1,84 @@
+{
+  "name": "Native_Ad_Build_Price_Wired",
+  "dimensions": {
+    "width": "730",
+    "height": "264"
+  },
+  "fields": {
+    "impressionTag": "",
+    "impressionTag2": "",
+    "impressionTag3": "",
+    "clickthroughUrl": "//www.mazdausa.com",
+    "cta": "BUILD AT MAZDAUSA.COM",
+    "headline": "Build Your 2018 f-350 Super Duty <sup>®</sup>",
+    "headline2": "Customize Your 2018 f-350 Super Duty <sup>®</sup>",
+    "disclaimerCopy": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur facilisis lacus felis, vel convallis metus tempor et. Sed in dui leo. Duis non risus sed mauris tincidunt pharetra. Ut ac dictum dui. In vitae mi dui. Vestibulum nibh nulla, laoreet in mattis commodo, rhoncus consequat volutpat, rhoncus consequat volutpat.",
+    "customData": "{\"isConquest\":false, \"photo\":\"\", \"colorInfo\":[{\"id\":\"401657704\",\"title\":\"Graphite Metallic\",\"primaryRgbValue\":\"41,44,49\",\"path\":\"/c7i74h5qoD.jpg\"},{\"id\":\"401657703\",\"title\":\"Cajun Red Tintcoat\",\"primaryRgbValue\":\"113,31,31\",\"path\":\"/IQew6uvW7B.jpg\"},{\"id\":\"401657700\",\"title\":\"Black\",\"primaryRgbValue\":\"0,0,0\",\"path\":\"/ZAqlkwvKt8.jpg\"},{\"id\":\"401657701\",\"title\":\"Pepperdust Metallic\",\"primaryRgbValue\":\"178,171,165\",\"path\":\"/cIAiSyQIJg.jpg\"},{\"id\":\"401657698\",\"title\":\"Arctic Blue Metallic\",\"primaryRgbValue\":\"119,151,176\",\"path\":\"/zyHzuEQP64.jpg\"},{\"id\":\"401657699\",\"title\":\"Nightfall Gray Metallic\",\"primaryRgbValue\":\"50,55,58\",\"path\":\"/PeDUX9TS0N.jpg\"},{\"id\":\"401657696\",\"title\":\"Silver Ice Metallic\",\"primaryRgbValue\":\"216,219,218\",\"path\":\"/FgFW5EnzBU.jpg\"},{\"id\":\"401657694\",\"title\":\"Summit White\",\"primaryRgbValue\":\"255,255,255\",\"path\":\"/c7lhGIFQSk.jpg\"},{\"id\":\"401657695\",\"title\":\"Kinetic Blue Metallic\",\"primaryRgbValue\":\"71,164,242\",\"path\":\"/OSAovgOhR1.jpg\"},{\"id\":\"401657693\",\"title\":\"Red Hot\",\"primaryRgbValue\":\"162,21,38\",\"path\":\"/IQew6uvW7B.jpg\"},{\"id\":\"401657691\",\"title\":\"Kinetic Orange Red\",\"primaryRgbValue\":\"255,69,0\",\"path\":\"/XCcnfbsDsD.jpg\"},{\"id\":\"401657690\",\"title\":\"Yellow Hot\",\"primaryRgbValue\":\"255,255,38\",\"path\":\"/dn2RhsbF1B.jpg\"},{\"id\":\"401657689\",\"title\":\"Just Brown\",\"primaryRgbValue\":\"165,42,42\",\"path\":\"/7rcB8YI0ZO.jpg\"}]}",
+    "CLICK_URL_UNESC": ""
+  },
+  "fields1": {
+    "additional_field_name": "no disclaimer",
+    "impressionTag": "",
+    "impressionTag2": "",
+    "impressionTag3": "",
+    "clickthroughUrl": "//www.mazdausa.com",
+    "cta": "BUILD AT MAZDAUSA.COM",
+    "headline": "Build Your 2018 f-350 Super Duty <sup>®</sup>",
+    "headline2": "Customize Your 2018 f-350 Super Duty <sup>®</sup>",
+    "disclaimerCopy": "",
+    "customData": "{\"isConquest\":false, \"photo\":\"\", \"colorInfo\":[{\"id\":\"401657704\",\"title\":\"Graphite Metallic\",\"primaryRgbValue\":\"41,44,49\",\"path\":\"/c7i74h5qoD.jpg\"},{\"id\":\"401657703\",\"title\":\"Cajun Red Tintcoat\",\"primaryRgbValue\":\"113,31,31\",\"path\":\"/IQew6uvW7B.jpg\"},{\"id\":\"401657700\",\"title\":\"Black\",\"primaryRgbValue\":\"0,0,0\",\"path\":\"/ZAqlkwvKt8.jpg\"},{\"id\":\"401657701\",\"title\":\"Pepperdust Metallic\",\"primaryRgbValue\":\"178,171,165\",\"path\":\"/cIAiSyQIJg.jpg\"},{\"id\":\"401657698\",\"title\":\"Arctic Blue Metallic\",\"primaryRgbValue\":\"119,151,176\",\"path\":\"/zyHzuEQP64.jpg\"},{\"id\":\"401657699\",\"title\":\"Nightfall Gray Metallic\",\"primaryRgbValue\":\"50,55,58\",\"path\":\"/PeDUX9TS0N.jpg\"},{\"id\":\"401657696\",\"title\":\"Silver Ice Metallic\",\"primaryRgbValue\":\"216,219,218\",\"path\":\"/FgFW5EnzBU.jpg\"},{\"id\":\"401657694\",\"title\":\"Summit White\",\"primaryRgbValue\":\"255,255,255\",\"path\":\"/c7lhGIFQSk.jpg\"},{\"id\":\"401657695\",\"title\":\"Kinetic Blue Metallic\",\"primaryRgbValue\":\"71,164,242\",\"path\":\"/OSAovgOhR1.jpg\"},{\"id\":\"401657693\",\"title\":\"Red Hot\",\"primaryRgbValue\":\"162,21,38\",\"path\":\"/IQew6uvW7B.jpg\"},{\"id\":\"401657691\",\"title\":\"Kinetic Orange Red\",\"primaryRgbValue\":\"255,69,0\",\"path\":\"/XCcnfbsDsD.jpg\"},{\"id\":\"401657690\",\"title\":\"Yellow Hot\",\"primaryRgbValue\":\"255,255,38\",\"path\":\"/dn2RhsbF1B.jpg\"},{\"id\":\"401657689\",\"title\":\"Just Brown\",\"primaryRgbValue\":\"165,42,42\",\"path\":\"/7rcB8YI0ZO.jpg\"}]}",
+    "CLICK_URL_UNESC": ""
+  },
+  "fields2": {
+    "additional_field_name": "no customData(onlyPhoto)",
+    "impressionTag": "",
+    "impressionTag2": "",
+    "impressionTag3": "",
+    "clickthroughUrl": "//www.mazdausa.com",
+    "cta": "VISIT MAZDAUSA.COM",
+    "headline": "Customize Your 2018 f-350 Super Duty <sup>®</sup>",
+    "headline2": "Build & Price Your 2018 f-350 Super Duty",
+    "disclaimerCopy": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur facilisis lacus felis, vel convallis metus tempor et. Sed in dui leo. Duis non risus sed mauris tincidunt pharetra. Ut ac dictum dui. In vitae mi dui. Vestibulum nibh nulla, laoreet in mattis commodo, rhoncus consequat volutpat, rhoncus consequat volutpat.",
+    "customData": "{\"isConquest\":false, \"photo\":\"http://static.ed.edmunds-media.com/unversioned/img/chevy/silverado/2016/clp/chevy-equinox.jpg\", \"colorInfo\":[]}",
+    "CLICK_URL_UNESC": ""
+  },
+  "fields3": {
+    "additional_field_name": "isConquest + customData",
+    "impressionTag": "",
+    "impressionTag2": "",
+    "impressionTag3": "",
+    "clickthroughUrl": "//www.mazdausa.com",
+    "cta": "BUILD AT MAZDAUSA.COM",
+    "headline": "Customize Your 2018 f-350 Super Duty <sup>®</sup>",
+    "headline2": "Build & Price Your 2018 f-350 Super Duty",
+    "disclaimerCopy": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur facilisis lacus felis, vel convallis metus tempor et. Sed in dui leo. Duis non risus sed mauris tincidunt pharetra. Ut ac dictum dui. In vitae mi dui. Vestibulum nibh nulla, laoreet in mattis commodo, rhoncus consequat volutpat, rhoncus consequat volutpat.",
+    "customData": "{\"isConquest\":true, \"photo\":\"\", \"colorInfo\":[{\"id\":\"401657704\",\"title\":\"Graphite Metallic\",\"primaryRgbValue\":\"41,44,49\",\"path\":\"/c7i74h5qoD.jpg\"},{\"id\":\"401657703\",\"title\":\"Cajun Red Tintcoat\",\"primaryRgbValue\":\"113,31,31\",\"path\":\"/IQew6uvW7B.jpg\"},{\"id\":\"401657700\",\"title\":\"Black\",\"primaryRgbValue\":\"0,0,0\",\"path\":\"/ZAqlkwvKt8.jpg\"},{\"id\":\"401657701\",\"title\":\"Pepperdust Metallic\",\"primaryRgbValue\":\"178,171,165\",\"path\":\"/cIAiSyQIJg.jpg\"},{\"id\":\"401657698\",\"title\":\"Arctic Blue Metallic\",\"primaryRgbValue\":\"119,151,176\",\"path\":\"/zyHzuEQP64.jpg\"},{\"id\":\"401657699\",\"title\":\"Nightfall Gray Metallic\",\"primaryRgbValue\":\"50,55,58\",\"path\":\"/PeDUX9TS0N.jpg\"},{\"id\":\"401657696\",\"title\":\"Silver Ice Metallic\",\"primaryRgbValue\":\"216,219,218\",\"path\":\"/FgFW5EnzBU.jpg\"},{\"id\":\"401657694\",\"title\":\"Summit White\",\"primaryRgbValue\":\"255,255,255\",\"path\":\"/c7lhGIFQSk.jpg\"},{\"id\":\"401657695\",\"title\":\"Kinetic Blue Metallic\",\"primaryRgbValue\":\"71,164,242\",\"path\":\"/OSAovgOhR1.jpg\"},{\"id\":\"401657693\",\"title\":\"Red Hot\",\"primaryRgbValue\":\"162,21,38\",\"path\":\"/IQew6uvW7B.jpg\"},{\"id\":\"401657691\",\"title\":\"Kinetic Orange Red\",\"primaryRgbValue\":\"255,69,0\",\"path\":\"/XCcnfbsDsD.jpg\"},{\"id\":\"401657690\",\"title\":\"Yellow Hot\",\"primaryRgbValue\":\"255,255,38\",\"path\":\"/dn2RhsbF1B.jpg\"},{\"id\":\"401657689\",\"title\":\"Just Brown\",\"primaryRgbValue\":\"165,42,42\",\"path\":\"/7rcB8YI0ZO.jpg\"}]}",
+    "CLICK_URL_UNESC": ""
+  },
+  "fields4": {
+    "additional_field_name": "isConquest + NoCustomData(onlyPhoto)",
+    "impressionTag": "",
+    "impressionTag2": "",
+    "impressionTag3": "",
+    "clickthroughUrl": "//www.mazdausa.com",
+    "cta": "VISIT MAZDAUSA.COM",
+    "headline": "Customize Your 2018 f-350 Super Duty <sup>®</sup>",
+    "headline2": "Build & Price Your 2018 f-350 Super Duty",
+    "disclaimerCopy": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur facilisis lacus felis, vel convallis metus tempor et. Sed in dui leo. Duis non risus sed mauris tincidunt pharetra. Ut ac dictum dui. In vitae mi dui. Vestibulum nibh nulla, laoreet in mattis commodo, rhoncus consequat volutpat, rhoncus consequat volutpat.",
+    "customData": "{\"isConquest\":true, \"photo\":\"http://static.ed.edmunds-media.com/unversioned/img/chevy/silverado/2016/clp/chevy-equinox.jpg\", \"colorInfo\":[]}",
+    "CLICK_URL_UNESC": ""
+  },
+  "fields5": {
+    "additional_field_name": "customData oldFormat",
+    "impressionTag": "",
+    "impressionTag2": "",
+    "impressionTag3": "",
+    "clickthroughUrl": "//www.mazdausa.com",
+    "cta": "BUILD AT MAZDAUSA.COM",
+    "headline": "Build Your 2018 f-350 Super Duty <sup>®</sup>",
+    "headline2": "Customize Your 2018 f-350 Super Duty",
+    "disclaimerCopy": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur facilisis lacus felis, vel convallis metus tempor et. Sed in dui leo. Duis non risus sed mauris tincidunt pharetra. Ut ac dictum dui. In vitae mi dui. Vestibulum nibh nulla, laoreet in mattis commodo, rhoncus consequat volutpat, rhoncus consequat volutpat.",
+    "customData": "[{\"id\":\"401657704\",\"title\":\"Graphite Metallic\",\"primaryRgbValue\":\"41,44,49\",\"path\":\"/c7i74h5qoD.jpg\"},{\"id\":\"401657703\",\"title\":\"Cajun Red Tintcoat\",\"primaryRgbValue\":\"113,31,31\",\"path\":\"/IQew6uvW7B.jpg\"}]",
+    "CLICK_URL_UNESC": ""
+  }
+}

@@ -1,0 +1,60 @@
+<script type="text/javascript" src='//static.ed.edmunds-media.com/edmunds-webassets/current/wro/edw-partner-nasa.js'></script>
+
+<script type="text/javascript">
+    window.tplFields = {
+        displayFivestar: "{{display_fivestar}}" === "true" ? true : false,
+        dealerDestinationUrl: "{{dealer_click_default}}",
+        utmParams: "{{utm_params}}",
+        dealerCddId: "{{dealer_cdd_id}}",
+        clickTagRedirector: "{{click_tag_redirector}}",
+        customDefaultImage: "{{custom_default_image_id}}",
+        cascadeId: "{{cascade_id}}" || "inv-search",
+        productSetId: "{{product_set_id}}",
+        disableInventory: "{{disable_inventory}}" === "true" ? true : false,
+    };
+    window.tplConstants = {
+        edwPage: "%%PATTERN:edwpg%%",
+        searchMake: "%%PATTERN:mk%%",
+        searchModel: "%%PATTERN:mdl%%",
+        searchYear: "%%PATTERN:year%%",
+        searchType: "%%PATTERN:type%%"
+    };
+</script>
+
+<div class="container">
+    <div class="dealer-click">
+        <div class="advertisement-label">PROMOTED</div>
+        <div class="fivestar-badge hidden"><img src="{{fivestar_logo_url}}"/></div>
+        <div class="dealer-name" title="{{title}}">{{title}}</div>
+        <div class="dealer-address">{{info_text_1}}</div>
+        <div class="make-logo"><img src="{{logo_image_id}}" style="{{logo_image_style}}" /></div>
+    </div>
+    <div class="vin-click">
+        <div class="make-img"><img src="{{image_id_custom_default}}" /></div>
+        <span>{{info_text_2}}</span>
+        <div class="offer-button" role="button">
+            <span class="common-caption">{{button_text}}</span>
+        </div>
+    </div>
+</div>
+
+<div style="opacity: 0;">{{tp_impression_tracker_1}}</div>
+
+<div class="vehicle-slider" style="display:none;">
+    <ol class="vehicle-content"></ol>
+</div>
+<div class="slider-text vehicle-info" style="display:none;"></div>
+
+<script type="text/template" id="tplImg">
+    <li class="vehicle-slide">
+        <img src="<%= tpl_img_slide_image%>"/>
+        <%= tpl_img_slide_stock_label%>
+    </li>
+</script>
+
+<script type="text/template" id="tplInfo">
+    <div class="slide-info hidden">
+        <%= tpl_info_slide_title%>
+        <%= tpl_info_slide_price%>
+    </div>
+</script>

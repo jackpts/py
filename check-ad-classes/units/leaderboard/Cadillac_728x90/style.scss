@@ -1,0 +1,148 @@
+@import '../../../assets/scss/leaderboard/vars.scss';
+
+html { font-size: 1rem; }
+
+body { text-rendering: geometricPrecision; }
+
+div { text-decoration: none; }
+
+.container {
+    cursor: pointer;
+    position: relative;
+    margin: 0;
+    padding: 0;
+    width: 728px;
+    height: 90px;
+    font-family: SansWebLight, Helvetica Neue, Helvetica, Arial, sans-serif;
+    border: 1px solid $lightgrey;
+    overflow: hidden;
+    background-color: $c-white;
+    box-sizing: border-box;
+}
+
+.offer-button {
+    cursor: pointer;
+    position: absolute;
+    right: 70px;
+    bottom: 12px;
+    width: 133px;
+    font-family: SansWebBook, Helvetica Neue, Helvetica, Arial, sans-serif;
+    font-size: 10.3px;
+    letter-spacing: .016rem;
+    text-align: left;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: $c-white;
+    background-color: $c-btn-main;
+    border-radius: 0;
+    border-color: $c-btn-main;
+    box-shadow: none;
+    overflow: hidden;
+    z-index: 7;
+    &:hover,
+    &:active,
+    &:focus {
+        background-color: $c-btn-hover;
+        border-color: $c-btn-hover;
+    }
+
+    .common-caption {
+        display: inline-block;
+        padding: .4rem .8rem .23rem;
+        letter-spacing: -.2px;
+        overflow: hidden;
+    }
+}
+
+.vin-click {
+    cursor: pointer;
+    position: absolute;
+    left: 172px;
+    top: 0;
+    width: 450px;
+    z-index: 1;
+
+    .make-img {
+        width: 228px;
+        height: 90px;
+
+        img {
+            max-width: 100%;
+        }
+    }
+    > span {
+        position: absolute;
+        top: 10px;
+        left: 250px;
+        width: 200px;
+        max-height: 40px;
+        font-size: 16px;
+        text-transform: uppercase;
+        letter-spacing: -.15px;
+        color: $c-font;
+        word-wrap: break-word;
+        overflow: hidden;
+    }
+}
+.dealer-click {
+    cursor: pointer;
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    padding-left: 10px;
+    z-index: 0;
+
+    .fivestar-badge {
+        position: absolute;
+        left: 110px;
+        top: 62px;
+
+        img { width: 50px; }
+    }
+
+    .fivestar-badge.hidden {
+        display: none;
+        visibility: hidden;
+    }
+
+    .dealer-name {
+        display: block;
+        padding-top: 10px;
+        width: 128px;
+        font-size: 12px;
+        text-transform: uppercase;
+        word-wrap: break-word;
+        letter-spacing: .92px;
+        color: $c-font;
+    }
+    .dealer-address {
+        margin-top: 7px;
+        text-transform: capitalize;
+        font-size: 9px;
+        letter-spacing: .7px;
+        color: $c-font;
+    }
+    .make-logo {
+        position: absolute;
+        top: 0;
+        right: 24px;
+        width: 90px;
+
+        img { max-width: 110px; }
+    }
+}
+
+.advertisement-label {
+    z-index: 1000;
+    color: #fff;
+    background: #f79535;
+    font: 700 9px/13px Open Sans;
+    float: right;
+    margin-right: 5px;
+    margin-top: 3px;
+    width: 54px;
+    position: relative;
+    text-align: center;
+}
