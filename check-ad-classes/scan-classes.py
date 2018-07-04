@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 
 import re
-import sys 
+import sys
 import warnings
 import os
 from glob import glob
@@ -13,7 +13,7 @@ import logging
 try:
     from tabulate import tabulate
 except ImportError:
-    logging.debug('local_settings failed to import', exc_info=True)
+    logging.debug('tabulate module failed to import', exc_info=True)
     pass
 
 scanDir = '/home/jacky/git/libraries-adcreative-templates/units/native-ad-templates/'
@@ -64,7 +64,7 @@ def ready_steady():
         print('python scan-classes.py --custom-path /home/jacky/git/libraries-adcreative-templates/units/leaderboard')
         exit(1)
 
-    print('Check if tabulate module installed...'.format(), end=' ')
+    print('Check if tabulate module is installed...'.format(), end=' ')
     if 'tabulate' in sys.modules:
         print('Ok.')
     else:
@@ -137,7 +137,7 @@ def handle_styles_file(path):
 
     while True:
         line = f1.readline()
-        if len(line) == 0:      # Нулевая длина обозначает конец файла (EOF)
+        if len(line) == 0:
             break
 
         try:
@@ -153,7 +153,7 @@ def handle_styles_file(path):
 
     f1.close()
     if not styles_array:
-        print('Suddenly not classes found in this styles file!')
+        print('Suddenly no classes found in this styles file!')
 
     styles_array = filter_classes(styles_array)
     return list(set(styles_array))
@@ -168,11 +168,10 @@ def handle_template_file(path):
 
     f2.close()
 
-    # class_data = re.split('class=[\"|\'](\w+(.+?)(\s?))*[\"|\']', template_data, flags=re.IGNORECASE)
     class_data = re.findall(template_regex, template_data)
 
     if not class_data:
-        print('Suddenly not classes found in this template file!')
+        print('Suddenly no classes found in this template file!')
 
     for cl in class_data:
         inner_array = cl.split(' ')
@@ -192,13 +191,7 @@ def check_diff(a, b):
                 diff_template.append(d)
             else:
                 diff_styles.append(d)
-        # print('These classes exist only in Template: \n', diff_templates)
-        # print('These classes exist only in Styles: \n', diff_styles)
-    # else:
-        # print('Congratulations! No differences found!')
-    # diff_templ_string = ",".join(str(dt) for dt in diff_templates)
-    # diff_styles_string = ",".join(str(ds) for ds in diff_styles)
-    # return diff_templ_string, diff_styles_string
+
     return diff_template, diff_styles
 
 
@@ -228,7 +221,7 @@ def format_output(name, array, file_type):
 def do_output():
     global tableOutput, outputContent, outputHeaders
 
-    print()                         # just empty line
+    print()
     if tableOutput:
         print(tabulate(outputContent, headers=outputHeaders, tablefmt="psql"))
     else:
@@ -240,13 +233,13 @@ def do_output():
 
 def init_main():
     global subdir_arr, stylesFile, templateFile
-    
+
     for s in subdir_arr:
         styles_file_path = s + stylesFile
         template_file_path = s + templateFile
         f_styles_exist = is_file_exist(styles_file_path, 'styles')
         f_template_exist = is_file_exist(template_file_path, 'template')
-        ad_name = s[2:]  # ./SRP/ --> SRP
+        ad_name = s[2:]  # ./SRP/ --> SRP/
         if f_styles_exist and f_template_exist:
             styles_list = handle_styles_file(styles_file_path)
             template_list = handle_template_file(template_file_path)

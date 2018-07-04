@@ -4,152 +4,115 @@ Scripts for edmunds.com site, repo: libraries-adcreative-templates
 - Intended to check if the redundant classes found in native Ad templates and styles and reveal them out.
 
 2. scan-native-dir
-- scans native ad dir for sub-directories with templates/styles and checks them for redundant/missed classes
 
-a) Need to install `Python v.3` to operate with RE(gex) module;
+### Working with scan-classes.py script
 
-b) Need to install `tabulate` module to be able to output in table format:
+1. Pre-installation:
 
+a) Need to install Python v.3 at least (mostly for regex logic functionality). 
+Instruction: https://realpython.com/installing-python/
+
+How to check:
+
+    $ python3 --version
+    Python 3.6.5
+
+b) Recommended (but not obliged) to install python's `tabulate` module (https://pypi.org/project/tabulate/) for better output in table format:
+    
     pip3 install tabulate --user
+    
+How to check:
 
-***Example output*** (with no table mode):
+    python -c "import tabulate"
+If no errors during output (like `ModuleNotFoundError: No module named`) then all Ok.
 
-python3 scan-native-dir.py 
+Note: if this module isn't installed the output will be in simple format.
+Note2: you can also customize the table output by changing the param inside the script: `tablefmt="psql"`
 
-Check if tabulate module installed... Ok.
+2. Run:
 
-Checking if file with styles exists [./Build_and_Price_Wired/style.scss]... Ok.
+a) as a script in package.json:
 
-Checking if file with template exists [./Build_and_Price_Wired/template.html]... Ok.
+    npm run scan-classes
 
-Checking if file with styles exists [./SRP/style.scss]... Ok.
+b) directly via python:
 
-Checking if file with template exists [./SRP/template.html]... Ok.
+    python3 scan-classes.py
+    
+3. Command line parameters:
 
-Checking if file with styles exists [./Article_Wired/style.scss]... Ok.
+a) input directory by default set inside the py script in var:
 
-Checking if file with template exists [./Article_Wired/template.html]... Ok.
+    scanDir = './units/native-ad-templates/'
+You can customize this var or use a command line parameter to set another directory like this:
 
-Checking if file with styles exists [./Map_Mobile/style.scss]... Ok.
+    python3 scan-classes.py --custom-path ./units/leaderboard/
 
-Checking if file with template exists [./Map_Mobile/template.html]... Ok.
+**b) Flag `--scan-imports` - add the possibility to scan for @import-ed styles inside the `style.scss` files.
 
-.....
+    python3 scan-classes.py --scan-imports
 
-Checking if file with template exists [./VDP_Wired/template.html]... Ok.
+**c) Flag `--scan-js` - add the possibility to scan for classes inside the `index.js` files (like `.hidden`, etc.).
 
-['Build_and_Price_Wired/template']
+    python3 scan-classes.py --scan-js
+    
+**d) Flag `--chunk-size` - add the possibility to format the output by number of classes per row
+Because when the table is too wide and your terminal window is don't and too many classes found - it can be the issue.
 
-		 ['disclaimer-copy, ad-label, btn-link, custom-data']
-		 ['btn-outline-primary, text-gray-dark']
-		 
-['Build_and_Price_Wired/styles']
+    python3 scan-classes.py --chunk-size 7
+Also you can set this variable inside the script - find `chunkSize = 4` line.
 
-		 ['border-radius, ml-1, text-primary, d-block']
-		 ['font-weight-normal, mt-0_5, border-2, p-0']
-		 ['d-inline-block, mr-0_5, pt-2, mb-0_75']
-		 ['no-custom-data, border-gray, color-swatch, xsmall']
-		 ['mx-auto, border-1']
-		 
-['SRP/template']
+** - still in TODO.
 
-		 ['w-100, disclaimer-copy, mb-0_25, mr-0_25']
-		 ['ad-label, oem-url, text-gray-dark']
-		 
-['SRP/styles']
+4. Output example:
+a) with tabulate module installed + custom path: 
 
-		 ['display-4, flex-column, my-1, mt-1_75']
-		 ['col-8, col-4, btn-sm, info-title-break']
-		 ['flex-row, mb-0_5, pr-0_5, ml-0_5']
-		 ['flex-wrap, display-3, display-6, py-0_75']
-		 ['h-100, mx-0_75, px-0_5, xsmall']
-		 ['text-gray-darker']
+>python3 scan-classes.py --custom-path ./units/leaderboard
 
-['SRP_Amp/styles']
-
-		 ['--- nothing to compare, file not exists ---']
-['Article_Wired/template']
-
-		 ['disclaimer-copy, jelly-bean, cta-body-text, flex-row']
-		 ['pr-1_5, body-container, px-1_5']
-		 
-['Article_Wired/styles']
-
-		 ['justify-content-around, w-100, mr-0_75, pr-2_75']
-		 ['pt-3_5, font-weight-normal, font-weight-bold, ml-3']
-		 ['mr-0_5, pb-1_5, mt-1_25, ml-0_25']
-		 ['pt-0_5, text-center']
-		  
-['Pricing_Module/template']
-
-		 ['justify-content-center, label2, disclaimer-copy, headline2']
-		 ['align-items-center, jelly-bean, d-flex, native-ad-disclaimer-pricing']
-		 ['ad-label, label3, label, mx-md-0']
-		 
-['Pricing_Module/styles']
-
-		 ['display-5, large, small), invisible']
-['Pricing_Fresh_Core_Mobile/template']
-
-		 ['msrp, disclaimer-text, ad-label, local']
-		 ['cta-text, disclaimer-img']
-['Build_and_Price_Mobile/template']
-
-		 ['disclaimer-copy, pt-1_75, ad-label, btn-link']
-		 ['custom-data, btn-outline-primary, text-gray-dark']
-['Build_and_Price_Mobile/styles']
-
-		 ['conquest, border-radius, mt-1, text-primary']
-		 ['d-block, border-2, d-inline-block, text-left']
-		 ['mr-0_5, mt-1_5, mb-1_5, no-custom-data']
-		 ['border-gray, color-swatch, mt-1_25, xsmall']
-		 ['mx-auto, border-1']
-		 
-['Leaderboard/styles']
-
-		 ['my-1, display-5, ml
-		 -0_75, mx-0_75']
-		 ['my-1_5']
-['Button/template']
-
-		 ['---== no differences ==---']
-['Button/styles']
-
-		 ['hidden']
-
-['VDP_Wired/template']
-
-		 ['disclaimer-copy, row, medium, ad-label']
-		 ['flex-row, oem-url, mb-0_5, headline2']
-		 ['cta, headline, view-offer']
-['VDP_Wired/styles']
-
-		 ['mt-1_75, mt-2_25, mt-2, mr-0_25']
-		 ['mt-3, mt-1_5, mt-2_75, display-5']
-		 ['mt-1_25, mt-2_5']
-
-===========================================
-
-*Running with custom path param:*
-
-python scan-native-dir.py --custom-path /home/jacky/git/libraries-adcreative-templates/units/leaderboard
-
-Check if tabulate module installed... Ok.
+Check if tabulate module is installed... Ok.
 Checking if file with styles exists [./BMW_728x90/style.scss]... Ok.
 Checking if file with template exists [./BMW_728x90/template.html]... Ok.
 Checking if file with styles exists [./Cadillac_728x90/style.scss]... Ok.
 Checking if file with template exists [./Cadillac_728x90/template.html]... Ok.
 
-['BMW_728x90/template']
++--------------------------+--------------------------------------------------------------+
+| adName/file              | Differences                                                  |
+|--------------------------+--------------------------------------------------------------|
+| BMW_728x90/template      | --- no differences ---                                       |
+| BMW_728x90/styles        | --- no differences ---                                       |
+| Cadillac_728x90/template | vehicle-info, vehicle-slider, vehicle-slide, vehicle-content |
+|                          | slider-text, slide-info                                      |
+| Cadillac_728x90/styles   | --- no differences ---                                       |
++--------------------------+--------------------------------------------------------------+
 
-		 ['--- no differences ---']
-['BMW_728x90/styles']
+b) with no tabulate module installed and by default:
 
-		 ['--- no differences ---']
-['Cadillac_728x90/template']
+>npm run scan-classes
 
-		 ['vehicle-content, vehicle-info, slider-text, vehicle-slider']
-		 ['slide-info, vehicle-slide']
-['Cadillac_728x90/styles']
+Check if tabulate module is installed... Ok.
+Checking if file with styles exists [./SRP/style.scss]... Ok.
+Checking if file with template exists [./SRP/template.html]... Ok.
+Checking if file with styles exists [./SRP_Amp/style.scss]... Error! 
+	 Please check the path:  /home/jacky/git/libraries-adcreative-templates/units/native-ad-templates/SRP_Amp/style.scss
+Checking if file with template exists [./SRP_Amp/template.html]... Ok.
+...
+Checking if file with template exists [./VDP_Wired/template.html]... Ok.
+
+['SRP/template']
+
+		 ['oem-url, text-gray-dark, disclaimer-copy, mb-0_25']
+		 ['mr-0_25, w-100, ad-label']
+['SRP/styles']
+
+		 ['flex-column, flex-wrap, mx-0_75, my-1']
+		 ['display-3, col-8, mb-0_5, mt-1_75']
+		 ['py-0_75, pr-0_5, flex-row, display-6']
+		 ['col-4, display-4, btn-sm, ml-0_5']
+		 ['h-100, text-gray-darker, info-title-break, xsmall']
+		 ['px-0_5']
+['SRP_Amp/styles']
+
+		 ['--- nothing to compare, file not exists ---']
+['Button/template']
 
 		 ['--- no differences ---']
