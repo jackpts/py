@@ -141,11 +141,15 @@ Checking if file with styles exists [./Cadillac_728x90/style.scss]... Ok.
 Checking if file with template exists [./Cadillac_728x90/template.html]... Ok.
 
 ['BMW_728x90/template']
+
 		 ['--- no differences ---']
 ['BMW_728x90/styles']
+
 		 ['--- no differences ---']
 ['Cadillac_728x90/template']
+
 		 ['vehicle-content, vehicle-info, slider-text, vehicle-slider']
 		 ['slide-info, vehicle-slide']
 ['Cadillac_728x90/styles']
+
 		 ['--- no differences ---']
