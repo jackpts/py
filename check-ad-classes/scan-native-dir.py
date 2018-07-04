@@ -38,20 +38,31 @@ def ready_steady():
     if sys.version_info[0] < 3:
         warnings.warn('You need at least Python v.3 to run this script!', RuntimeWarning)
         exit(0)
-
-    if not os.path.isdir(scanDir):
-        print('Directory {0} is not exists! Please check var scanDir in the script.'.format(scanDir))
-        exit(1)
+    arguments = sys.argv[1:]
+    print('arguments=', arguments)
 
     # check command line params
-    if '--scan-imports' in sys.argv:
-        scanImports = True
-    if '--scan-js' in sys.argv:
-        scanJS = True
-    if '--out-log' in sys.argv:
-        outLOG = True
-    if '--custom-path' in sys.argv:
-        scanDir = sys.argv[1]       # TODO: find needed argument!!
+    if '--scan-imports' in arguments:
+        scanImports = True          # TODO
+    if '--scan-js' in arguments:
+        scanJS = True               # TODO
+    if '--out-log' in arguments:
+        outLOG = True               # TODO
+    if '--custom-path' in arguments:
+        custom_path_index = arguments.index('--custom-path') + 1
+        print('custom_path_index==', custom_path_index)
+        custom_path = arguments[custom_path_index]
+        if custom_path:
+            if not os.path.isdir(custom_path):
+                print('Directory {0} is not exists! \nPlease check var scanDir in the script.'.format(custom_path))
+            else:
+                scanDir = custom_path
+
+    if not os.path.isdir(scanDir):
+        print('Directory {0} is not exists! \n Please check var scanDir in the script.'.format(scanDir))
+        print('Or set custom path as command line parameter like this:')
+        print('python scan-native-dir.py --custom-path /home/jacky/git/libraries-adcreative-templates/units/leaderboard')
+        exit(1)
 
     print('Check if tabulate module installed...'.format(), end=' ')
     if 'tabulate' in sys.modules:
@@ -211,7 +222,7 @@ def format_output(name, array, file_type):
     if array:
         outputContent.append([ad_name, ', '.join(array)])
     else:
-        outputContent.append([ad_name, '---== no differences ==---'])
+        outputContent.append([ad_name, '--- no differences ---'])
 
 
 def do_output():
