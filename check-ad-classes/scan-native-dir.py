@@ -5,10 +5,16 @@ import sys
 import warnings
 import os
 from glob import glob
+import logging
 
 # https://pypi.org/project/tabulate/
 # pip3 install tabulate --user
-from tabulate import tabulate
+
+try:
+    from tabulate import tabulate
+except ImportError:
+    logging.debug('local_settings failed to import', exc_info=True)
+    pass
 
 scanDir = '/home/jacky/git/libraries-adcreative-templates/units/native-ad-templates/'
 stylesFile = 'style.scss'
@@ -49,7 +55,7 @@ def ready_steady():
     if 'tabulate' in sys.modules:
         print('Ok.')
     else:
-        print('Not! Please install tabulate module for better output (as a table) via: pip3 install tabulate --user')
+        print('Not! \nPlease install tabulate module for better output (as a table) via: pip3 install tabulate --user\n')
         tableOutput = False
 
     os.chdir(scanDir)
