@@ -33,7 +33,7 @@ chunkSize = 4
 
 
 def ready_steady():
-    global scanImports, scanJS, outLOG, tableOutput, subdir_arr
+    global scanImports, scanJS, outLOG, tableOutput, subdir_arr, scanDir
 
     if sys.version_info[0] < 3:
         warnings.warn('You need at least Python v.3 to run this script!', RuntimeWarning)
@@ -50,6 +50,8 @@ def ready_steady():
         scanJS = True
     if '--out-log' in sys.argv:
         outLOG = True
+    if '--custom-path' in sys.argv:
+        scanDir = sys.argv[1]       # TODO: find needed argument!!
 
     print('Check if tabulate module installed...'.format(), end=' ')
     if 'tabulate' in sys.modules:
@@ -68,15 +70,20 @@ def ready_steady():
 
 
 def is_file_exist(path, file_type):
+    global scanDir
+
     print('Checking if file with {0} exists [{1}]...'.format(file_type, path), end=' ')
     if os.path.exists(path):
         print('Ok.')
+        return True
     else:
-        print('Error! Please check the path: ', path)
+        print('Error! \n\t Please check the path: ', scanDir + path[2:])
+        return False
 
 
 def handle_styles_file(path):
     global styles_regex
+
     f1 = open(path, 'r')
     styles_array = []
     found = ''
@@ -226,15 +233,18 @@ def init_main():
     for s in subdir_arr:
         styles_file_path = s + stylesFile
         template_file_path = s + templateFile
-        is_file_exist(styles_file_path, 'styles')
-        styles_list = handle_styles_file(styles_file_path)
-        is_file_exist(template_file_path, 'template')
-        template_list = handle_template_file(template_file_path)
-        d_template, d_styles = check_diff(template_list, styles_list)
-
+        f_styles_exist = is_file_exist(styles_file_path, 'styles')
+        f_template_exist = is_file_exist(template_file_path, 'template')
         ad_name = s[2:]  # ./SRP/ --> SRP
-        format_output(ad_name, d_template, 'template')
-        format_output(ad_name, d_styles, 'styles')
+        if f_styles_exist and f_template_exist:
+            styles_list = handle_styles_file(styles_file_path)
+            template_list = handle_template_file(template_file_path)
+            d_template, d_styles = check_diff(template_list, styles_list)
+            format_output(ad_name, d_template, 'template')
+            format_output(ad_name, d_styles, 'styles')
+        else:
+            not f_template_exist and format_output(ad_name, ['--- nothing to compare, file not exists ---'], 'template')
+            not f_styles_exist and format_output(ad_name, ['--- nothing to compare, file not exists ---'], 'styles')
 
     do_output()
 
