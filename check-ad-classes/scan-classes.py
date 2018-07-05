@@ -17,7 +17,7 @@ except ImportError:
     pass
 
 scanDir = '/home/jacky/git/libraries-adcreative-templates/units/native-ad-templates/'
-styles_assets_path = '/home/jacky/git/libraries-adcreative-templates/assets/scss/'
+styles_assets_path = '/assets/scss/'
 stylesFile = 'style.scss'
 templateFile = 'template.html'
 jsFile = 'index.js'
@@ -35,7 +35,7 @@ chunkSize = 4
 
 
 def ready_steady():
-    global scanImports, scanJS, outLOG, tableOutput, subdir_arr, scanDir
+    global scanImports, scanJS, outLOG, tableOutput, subdir_arr, scanDir, chunkSize
 
     if sys.version_info[0] < 3:
         warnings.warn('You need at least Python v.3 to run this script!', RuntimeWarning)
@@ -44,14 +44,27 @@ def ready_steady():
 
     # check command line params
     if '--scan-imports' in arguments:
-        scanImports = True          
+        scanImports = True
+        print('--scan-imports is turning on')
+
     if '--scan-js' in arguments:
+        print('--scan-js is turning on')
         scanJS = True               # TODO
+
     if '--out-log' in arguments:
         outLOG = True               # TODO
+        print('log to file scan-classes.log is turning on')
+
     if '--chunk-size' in arguments:
-         ccccccc = 1                # TODO
+        print('chunk size parameter is defined')
+        custom_chunk_index = arguments.index('--chunk-size') + 1
+        custom_chunk = arguments[custom_chunk_index]
+        if custom_chunk:
+            print('Custom chunk size parameter is defined as: ' + custom_chunk)
+            chunkSize = int(custom_chunk) or chunkSize
+
     if '--custom-path' in arguments:
+        print('--custom-path parameter is defined')
         custom_path_index = arguments.index('--custom-path') + 1
         custom_path = arguments[custom_path_index]
         if custom_path:
@@ -73,8 +86,7 @@ def ready_steady():
         print('Not! \nPlease install tabulate module for better output (as a table) via: pip3 install tabulate\n')
         tableOutput = False
 
-    os.chdir(scanDir)
-    subdir_arr = glob('./*/')
+    subdir_arr = glob(scanDir + './*/')
     # ['./Build_and_Price_Wired/', './SRP/', './Article_Wired/', './Map_Mobile/', './Pricing_Module/',...]
 
     if not subdir_arr:
@@ -160,14 +172,15 @@ def handle_styles_file(path):
                 if found not in styles_array:
                     styles_array.append(found)
 
-        try:
-            line_without_quotes = re.sub('(\'|\")', '', line)
-            found_imports = re.search(import_regex, line_without_quotes).group(2)      # "@import '../../../assets/scss/native.scss'" --> native(.scss)
-        except AttributeError:
-            found_imports = ''
-        finally:
-            if found_imports and found_imports not in styles_imports_array:
-                styles_imports_array.append(re.sub(';', '', found_imports))         # common-mixins; --> common-mixins
+        if scanImports:
+            try:
+                line_without_quotes = re.sub('(\'|\")', '', line)
+                found_imports = re.search(import_regex, line_without_quotes).group(2)      # "@import '../../../assets/scss/native.scss'" --> native(.scss)
+            except AttributeError:
+                found_imports = ''
+            finally:
+                if found_imports and found_imports not in styles_imports_array:
+                    styles_imports_array.append(re.sub(';', '', found_imports))         # common-mixins; --> common-mixins
 
     f1.close()
     if not styles_array:
@@ -179,8 +192,11 @@ def handle_styles_file(path):
         for si in styles_imports_array:
             if not (si.endswith('scss')):
                 si += '.scss'
-            if os.path.exists(styles_assets_path + si):
-                styles_imports_array_path_checked.append(styles_assets_path + si)
+            full_path = os.getcwd() + styles_assets_path + si
+            if os.path.exists(full_path):
+                styles_imports_array_path_checked.append(full_path)
+            else:
+                print('import path doesn\'t exists: ' + full_path)
 
     return list(set(styles_array)), styles_imports_array_path_checked
 
@@ -288,7 +304,7 @@ def init_main():
         template_file_path = s + templateFile
         f_template_exist = is_file_exist(template_file_path, 'template')
         f_styles_exist = is_file_exist(styles_file_path, 'styles')
-        ad_name = s[2:]  # ./SRP/ --> SRP/
+        ad_name = s.replace(scanDir, '')[2:]        # .../SRP/ --> SRP/
         if f_styles_exist and f_template_exist:
             styles_list, styles_imports = handle_styles_file(styles_file_path)
             template_list = handle_template_file(template_file_path)

@@ -56,7 +56,7 @@ b) Flag `--scan-imports` - add the possibility to scan for @import-ed styles ins
 
     python3 scan-classes.py --scan-js
     
-**d) Flag `--chunk-size` - add the possibility to format the output by number of classes per row
+d) Flag `--chunk-size` - add the possibility to format the output by number of classes per row
 Because when the table is too wide and your terminal window is don't and too many classes found - it can be the issue.
 
     python3 scan-classes.py --chunk-size 7
