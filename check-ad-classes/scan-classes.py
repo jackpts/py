@@ -8,7 +8,7 @@ from glob import glob
 import logging
 
 # https://pypi.org/project/tabulate/
-# pip3 install tabulate --user
+# pip3 install tabulate
 
 try:
     from tabulate import tabulate
@@ -17,11 +17,13 @@ except ImportError:
     pass
 
 scanDir = '/home/jacky/git/libraries-adcreative-templates/units/native-ad-templates/'
+styles_assets_path = '/home/jacky/git/libraries-adcreative-templates/assets/scss/'
 stylesFile = 'style.scss'
 templateFile = 'template.html'
 jsFile = 'index.js'
-styles_regex = '(\s|\t)*\.\w+(-?)(.+?)(\s?)\{'
+styles_regex = '(\s|\t)*\.[\w+(-)?(\w+)?]*(\s|\t)*{'
 template_regex = r'class=[\"|\']([\w.(-|\s)?]+)*[\"|\'][\s+|>]'
+import_regex = '@import (.*)\/(.*)$'
 scanImports = False
 scanJS = False
 tableOutput = True
@@ -42,7 +44,7 @@ def ready_steady():
 
     # check command line params
     if '--scan-imports' in arguments:
-        scanImports = True          # TODO
+        scanImports = True          
     if '--scan-js' in arguments:
         scanJS = True               # TODO
     if '--out-log' in arguments:
@@ -68,7 +70,7 @@ def ready_steady():
     if 'tabulate' in sys.modules:
         print('Ok.')
     else:
-        print('Not! \nPlease install tabulate module for better output (as a table) via: pip3 install tabulate --user\n')
+        print('Not! \nPlease install tabulate module for better output (as a table) via: pip3 install tabulate\n')
         tableOutput = False
 
     os.chdir(scanDir)
@@ -93,11 +95,13 @@ def is_file_exist(path, file_type):
 
 
 def handle_styles_file(path):
-    global styles_regex
+    global styles_regex, import_regex
 
     f1 = open(path, 'r')
     styles_array = []
+    styles_imports_array = []
     found = ''
+    found_imports = ''
 
     def filter_classes(s_array):
         # filter empty classes
@@ -116,6 +120,15 @@ def handle_styles_file(path):
                 flt_unspaced.append(x)
         flt = flt_unspaced
 
+        # get rid of :hover/:focus.. pseudo classes
+        flt = [p for p in flt if ':' not in p]
+
+        # get rid of such classes: &:not(.small) {
+        flt_x = []
+        for x in flt:
+            flt_x.append(re.sub('(\(|\))', '', x))
+        flt = flt_x
+
         # separate classes like 'disclaimer-content.hidden'
         flt_dotted = []
         for x in flt:
@@ -126,9 +139,6 @@ def handle_styles_file(path):
             else:
                 flt_dotted.append(x)
         flt = flt_dotted
-
-        # get rid from :hover/:focus.. pseudo classes
-        flt = [p for p in flt if ':' not in p]
 
         # filter collection classes like "[class^='icon-']"
         flt = filter(lambda cl: not cl.startswith('[class'), flt)
@@ -142,21 +152,37 @@ def handle_styles_file(path):
 
         try:
             found = re.search(styles_regex, line).group(0)
-
         except AttributeError:
             found = ''      # .class { } not found in line
-
         finally:
-            if found and found not in styles_array:
+            if found:
                 found = found.strip()[:-1][1:].strip()                  # '     .btn {' --> 'btn'
-                styles_array.append(found)
+                if found not in styles_array:
+                    styles_array.append(found)
+
+        try:
+            line_without_quotes = re.sub('(\'|\")', '', line)
+            found_imports = re.search(import_regex, line_without_quotes).group(2)      # "@import '../../../assets/scss/native.scss'" --> native(.scss)
+        except AttributeError:
+            found_imports = ''
+        finally:
+            if found_imports and found_imports not in styles_imports_array:
+                styles_imports_array.append(re.sub(';', '', found_imports))         # common-mixins; --> common-mixins
 
     f1.close()
     if not styles_array:
-        print('Suddenly no classes found in this styles file!')
+        print('\tSuddenly no classes found in this styles file!')
 
     styles_array = filter_classes(styles_array)
-    return list(set(styles_array))
+    styles_imports_array_path_checked = []
+    if styles_imports_array:
+        for si in styles_imports_array:
+            if not (si.endswith('scss')):
+                si += '.scss'
+            if os.path.exists(styles_assets_path + si):
+                styles_imports_array_path_checked.append(styles_assets_path + si)
+
+    return list(set(styles_array)), styles_imports_array_path_checked
 
 
 def handle_template_file(path):
@@ -179,6 +205,28 @@ def handle_template_file(path):
             ia and template_array.append(ia)     # ia and - filter empty classes
 
     return list(set(template_array))
+
+
+def check_imports(templs, imports):
+    for i in imports:
+        print('\tLookup for import: ', i)
+        with open(i, 'r') as im:
+            im_data = im.read().replace('\n', '')
+        im.close()
+
+        for st in templs:
+            current_regex = '(\s|\t)*\.' + st + '(\s|\t)*{'
+            found_class = re.findall(current_regex, im_data)
+            current_regex = '@mixin ' + st + '\(\)(\s|\t)*{'
+            found_mixin = re.findall(current_regex, im_data)
+            if found_class:
+                templs.remove(st)
+                print('\t...Found class ' + st + ' in import, removed from the comparison.')
+            if found_mixin:
+                templs.remove(st)
+                print('\t...Found mixin ' + st + ' in import, removed from the comparison.')
+
+    return templs
 
 
 def check_diff(a, b):
@@ -235,15 +283,18 @@ def init_main():
     global subdir_arr, stylesFile, templateFile
 
     for s in subdir_arr:
+        print('-------------------------------')
         styles_file_path = s + stylesFile
         template_file_path = s + templateFile
-        f_styles_exist = is_file_exist(styles_file_path, 'styles')
         f_template_exist = is_file_exist(template_file_path, 'template')
+        f_styles_exist = is_file_exist(styles_file_path, 'styles')
         ad_name = s[2:]  # ./SRP/ --> SRP/
         if f_styles_exist and f_template_exist:
-            styles_list = handle_styles_file(styles_file_path)
+            styles_list, styles_imports = handle_styles_file(styles_file_path)
             template_list = handle_template_file(template_file_path)
             d_template, d_styles = check_diff(template_list, styles_list)
+            if styles_imports and d_template:
+                d_template = check_imports(d_template, styles_imports)
             format_output(ad_name, d_template, 'template')
             format_output(ad_name, d_styles, 'styles')
         else:

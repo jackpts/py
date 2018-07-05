@@ -19,7 +19,7 @@ How to check:
 
 b) Recommended (but not obliged) to install python's `tabulate` module (https://pypi.org/project/tabulate/) for better output in table format:
     
-    pip3 install tabulate --user
+    pip3 install tabulate
     
 How to check:
 
@@ -48,7 +48,7 @@ You can customize this var or use a command line parameter to set another direct
 
     python3 scan-classes.py --custom-path ./units/leaderboard/
 
-**b) Flag `--scan-imports` - add the possibility to scan for @import-ed styles inside the `style.scss` files.
+b) Flag `--scan-imports` - add the possibility to scan for @import-ed styles inside the `style.scss` files.
 
     python3 scan-classes.py --scan-imports
 
@@ -89,7 +89,9 @@ b) with no tabulate module installed and by default:
 
 >npm run scan-classes
 
-Check if tabulate module is installed... Ok.
+Check if tabulate module is installed... Not! 
+Please install tabulate module for better output (as a table) via: pip3 install tabulate --user
+
 Checking if file with styles exists [./SRP/style.scss]... Ok.
 Checking if file with template exists [./SRP/template.html]... Ok.
 Checking if file with styles exists [./SRP_Amp/style.scss]... Error! 
