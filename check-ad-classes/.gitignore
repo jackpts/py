@@ -1,0 +1,11 @@
+.DS_Store
+.idea
+.vscode
+*.iml
+*.log
+
+node_modules/
+public/
+build/
+output.js
+aws-credentials.json

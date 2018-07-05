@@ -40,69 +40,78 @@ def ready_steady():
     if sys.version_info[0] < 3:
         warnings.warn('You need at least Python v.3 to run this script!', RuntimeWarning)
         exit(0)
-    arguments = sys.argv[1:]
 
     # check command line params
-    if '--scan-imports' in arguments:
-        scanImports = True
-        print('--scan-imports is turning on')
-
-    if '--scan-js' in arguments:
-        print('--scan-js is turning on')
-        scanJS = True               # TODO
+    arguments = sys.argv[1:]
 
     if '--out-log' in arguments:
-        outLOG = True               # TODO
+        outLOG = True
         print('log to file scan-classes.log is turning on')
+        logging.basicConfig(filename='scan-classes.log', level=logging.DEBUG, format='%(asctime)s %(message)s', datefmt='%m/%d/%Y %I:%M:%S %p')
+
+    if '--scan-imports' in arguments:
+        scanImports = True
+        check_log('--scan-imports is turning on')
+
+    if '--scan-js' in arguments:
+        check_log('--scan-js is turning on')
+        scanJS = True               # TODO
 
     if '--chunk-size' in arguments:
-        print('chunk size parameter is defined')
         custom_chunk_index = arguments.index('--chunk-size') + 1
         custom_chunk = arguments[custom_chunk_index]
         if custom_chunk:
-            print('Custom chunk size parameter is defined as: ' + custom_chunk)
+            check_log('Custom chunk size parameter is defined as: ' + custom_chunk)
             chunkSize = int(custom_chunk) or chunkSize
 
     if '--custom-path' in arguments:
-        print('--custom-path parameter is defined')
+        check_log('--custom-path parameter is defined')
         custom_path_index = arguments.index('--custom-path') + 1
         custom_path = arguments[custom_path_index]
         if custom_path:
             if not os.path.isdir(custom_path):
-                print('Directory {0} is not exists! \nPlease check var scanDir in the script.'.format(custom_path))
+                check_log('Directory {0} is not exists! \nPlease check var scanDir in the script.'.format(custom_path))
             else:
                 scanDir = custom_path
 
     if not os.path.isdir(scanDir):
-        print('Directory {0} is not exists! \n Please check var scanDir in the script.'.format(scanDir))
-        print('Or set custom path as command line parameter like this:')
-        print('python scan-classes.py --custom-path /home/jacky/git/libraries-adcreative-templates/units/leaderboard')
+        check_log('Directory {0} is not exists! \n Please check var scanDir in the script.'.format(scanDir))
+        check_log('Or set custom path as command line parameter like this:')
+        check_log('python scan-classes.py --custom-path /home/jacky/git/libraries-adcreative-templates/units/leaderboard')
         exit(1)
 
     print('Check if tabulate module is installed...'.format(), end=' ')
+    check_log('Check if tabulate module is installed...')
     if 'tabulate' in sys.modules:
-        print('Ok.')
+        check_log('Ok.')
     else:
-        print('Not! \nPlease install tabulate module for better output (as a table) via: pip3 install tabulate\n')
+        check_log('Not! \nPlease install tabulate module for better output (as a table) via: pip3 install tabulate\n')
         tableOutput = False
 
     subdir_arr = glob(scanDir + './*/')
     # ['./Build_and_Price_Wired/', './SRP/', './Article_Wired/', './Map_Mobile/', './Pricing_Module/',...]
 
     if not subdir_arr:
-        print('No subdirectories found in scanDir [{0}] path! Please set proper path in var.'.format(scanDir))
+        check_log('No subdirectories found in scanDir [{0}] path! Please set proper path in var.'.format(scanDir))
         exit(0)
+
+
+def check_log(text):
+    print(text)
+    outLOG and logging.info(text)
 
 
 def is_file_exist(path, file_type):
     global scanDir
 
     print('Checking if file with {0} exists [{1}]...'.format(file_type, path), end=' ')
+    check_log('Checking if file with ' + file_type + 'exists' + path)
     if os.path.exists(path):
-        print('Ok.')
+        check_log('Ok.')
         return True
     else:
         print('Error! \n\t Please check the path: ', scanDir + path[2:])
+        check_log('Error! \n\t Please check the path' + scanDir + path[2:])
         return False
 
 
@@ -184,7 +193,7 @@ def handle_styles_file(path):
 
     f1.close()
     if not styles_array:
-        print('\tSuddenly no classes found in this styles file!')
+        check_log('\tSuddenly no classes found in this styles file!')
 
     styles_array = filter_classes(styles_array)
     styles_imports_array_path_checked = []
@@ -196,7 +205,7 @@ def handle_styles_file(path):
             if os.path.exists(full_path):
                 styles_imports_array_path_checked.append(full_path)
             else:
-                print('import path doesn\'t exists: ' + full_path)
+                check_log('import path doesn\'t exists: ' + full_path)
 
     return list(set(styles_array)), styles_imports_array_path_checked
 
@@ -213,7 +222,7 @@ def handle_template_file(path):
     class_data = re.findall(template_regex, template_data)
 
     if not class_data:
-        print('Suddenly no classes found in this template file!')
+        check_log('Suddenly no classes found in this template file!')
 
     for cl in class_data:
         inner_array = cl.split(' ')
@@ -226,6 +235,7 @@ def handle_template_file(path):
 def check_imports(templs, imports):
     for i in imports:
         print('\tLookup for import: ', i)
+        check_log('\tLookup for import: ' + i)
         with open(i, 'r') as im:
             im_data = im.read().replace('\n', '')
         im.close()
@@ -237,10 +247,10 @@ def check_imports(templs, imports):
             found_mixin = re.findall(current_regex, im_data)
             if found_class:
                 templs.remove(st)
-                print('\t...Found class ' + st + ' in import, removed from the comparison.')
+                check_log('\t...Found class ' + st + ' in import, removed from the comparison.')
             if found_mixin:
                 templs.remove(st)
-                print('\t...Found mixin ' + st + ' in import, removed from the comparison.')
+                check_log('\t...Found mixin ' + st + ' in import, removed from the comparison.')
 
     return templs
 
@@ -285,21 +295,21 @@ def format_output(name, array, file_type):
 def do_output():
     global tableOutput, outputContent, outputHeaders
 
-    print()
+    check_log('')
     if tableOutput:
-        print(tabulate(outputContent, headers=outputHeaders, tablefmt="psql"))
+        check_log(tabulate(outputContent, headers=outputHeaders, tablefmt="psql"))
     else:
         for oc in outputContent:
             if bool(''.join(oc[:1])):
-                print(oc[:1])
-            print('\t\t', oc[1:])
+                check_log(oc[:1])
+            check_log('\t\t' + oc[1:])
 
 
 def init_main():
     global subdir_arr, stylesFile, templateFile
 
     for s in subdir_arr:
-        print('-------------------------------')
+        check_log('-------------------------------')
         styles_file_path = s + stylesFile
         template_file_path = s + templateFile
         f_template_exist = is_file_exist(template_file_path, 'template')
