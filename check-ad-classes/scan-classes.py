@@ -87,7 +87,7 @@ def ready_steady():
         exit(1)
 
     not onlyTable and print('Check if tabulate module is installed...'.format(), end=' ')
-    check_log('Check if tabulate module is installed...')
+    # check_log('Check if tabulate module is installed...')
     if 'tabulate' in sys.modules:
         check_log('Ok.')
     else:
