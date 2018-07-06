@@ -52,9 +52,9 @@ b) Flag `--scan-imports` - add the possibility to scan for @import-ed styles ins
 
     python3 scan-classes.py --scan-imports
 
-**c) Flag `--scan-js` - add the possibility to scan for classes inside the `index.js` files (like `.hidden`, etc.).
+c) Flag `--scan-js` - add the possibility to scan for classes inside the `index.js` files (like `.hidden`, etc.).
 
-    python3 scan-classes.py --scan-js
+    python3 scan-classes.py --scan-js --scan-imports
     
 d) Flag `--chunk-size` - add the possibility to format the output by number of classes per row
 Because when the table is too wide and your terminal window is don't and too many classes found - it can be the issue.
@@ -62,7 +62,9 @@ Because when the table is too wide and your terminal window is don't and too man
     python3 scan-classes.py --chunk-size 7
 Also you can set this variable inside the script - find `chunkSize = 4` line.
 
-** - still in TODO.
+e) Flag `--only-table` - outputs only the result table without the logging of file opening, checking classes etc.
+
+    python3 scan-classes.py --scan-js --scan-imports --only-table
 
 4. Output example:
 a) with tabulate module installed + custom path: 

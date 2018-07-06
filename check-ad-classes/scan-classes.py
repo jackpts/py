@@ -21,21 +21,24 @@ styles_assets_path = '/assets/scss/'
 stylesFile = 'style.scss'
 templateFile = 'template.html'
 jsFile = 'index.js'
-styles_regex = '(\s|\t)*\.[\w+(-)?(\w+)?]*(\s|\t)*{'
+styles_regex = '(\s|\t)*\.(\w+((-)?\w+)*)(\s|\t)*{'
 template_regex = r'class=[\"|\']([\w.(-|\s)?]+)*[\"|\'][\s+|>]'
+js_regex = '[\'|\"]\.?(\w+((-)?\w+)*)[\'|\"]'
 import_regex = '@import (.*)\/(.*)$'
 scanImports = False
 scanJS = False
 tableOutput = True
 outLOG = False
+onlyTable = False
 subdir_arr = []
+scan_js_array = []
 outputContent = []
 outputHeaders = ['adName/file', 'Differences']
 chunkSize = 4
 
 
 def ready_steady():
-    global scanImports, scanJS, outLOG, tableOutput, subdir_arr, scanDir, chunkSize
+    global scanImports, scanJS, outLOG, tableOutput, subdir_arr, scanDir, chunkSize, onlyTable
 
     if sys.version_info[0] < 3:
         warnings.warn('You need at least Python v.3 to run this script!', RuntimeWarning)
@@ -44,18 +47,21 @@ def ready_steady():
     # check command line params
     arguments = sys.argv[1:]
 
+    if '--only-table' in arguments:
+        onlyTable = True
+
     if '--out-log' in arguments:
         outLOG = True
-        print('log to file scan-classes.log is turning on')
         logging.basicConfig(filename='scan-classes.log', level=logging.DEBUG, format='%(asctime)s %(message)s', datefmt='%m/%d/%Y %I:%M:%S %p')
+        check_log('log to file scan-classes.log is turning on')
 
     if '--scan-imports' in arguments:
         scanImports = True
         check_log('--scan-imports is turning on')
 
     if '--scan-js' in arguments:
+        scanJS = True
         check_log('--scan-js is turning on')
-        scanJS = True               # TODO
 
     if '--chunk-size' in arguments:
         custom_chunk_index = arguments.index('--chunk-size') + 1
@@ -77,10 +83,10 @@ def ready_steady():
     if not os.path.isdir(scanDir):
         check_log('Directory {0} is not exists! \n Please check var scanDir in the script.'.format(scanDir))
         check_log('Or set custom path as command line parameter like this:')
-        check_log('python scan-classes.py --custom-path /home/jacky/git/libraries-adcreative-templates/units/leaderboard')
+        check_log('python scan-classes.py --custom-path ./units/leaderboard')
         exit(1)
 
-    print('Check if tabulate module is installed...'.format(), end=' ')
+    not onlyTable and print('Check if tabulate module is installed...'.format(), end=' ')
     check_log('Check if tabulate module is installed...')
     if 'tabulate' in sys.modules:
         check_log('Ok.')
@@ -97,26 +103,27 @@ def ready_steady():
 
 
 def check_log(text):
-    print(text)
+    if not onlyTable:
+        print(text)
     outLOG and logging.info(text)
 
 
 def is_file_exist(path, file_type):
-    global scanDir
+    global scanDir, onlyTable
 
-    print('Checking if file with {0} exists [{1}]...'.format(file_type, path), end=' ')
-    check_log('Checking if file with ' + file_type + 'exists' + path)
+    not onlyTable and print('Checking if file with {0} exists [{1}]...'.format(file_type, path), end=' ')
+    outLOG and logging.info('Checking if file with ' + file_type + 'exists [' + path + ']')
     if os.path.exists(path):
         check_log('Ok.')
         return True
     else:
-        print('Error! \n\t Please check the path: ', scanDir + path[2:])
+        not onlyTable and print('Error! \n\t Please check the path: ', scanDir + path[2:])
         check_log('Error! \n\t Please check the path' + scanDir + path[2:])
         return False
 
 
 def handle_styles_file(path):
-    global styles_regex, import_regex
+    global styles_regex, import_regex, scan_js_array
 
     f1 = open(path, 'r')
     styles_array = []
@@ -184,12 +191,13 @@ def handle_styles_file(path):
         if scanImports:
             try:
                 line_without_quotes = re.sub('(\'|\")', '', line)
-                found_imports = re.search(import_regex, line_without_quotes).group(2)      # "@import '../../../assets/scss/native.scss'" --> native(.scss)
+                found_imports = re.search(import_regex, line_without_quotes).group(2)
+                # "@import '../../../assets/scss/native.scss'" --> native(.scss)
             except AttributeError:
                 found_imports = ''
             finally:
                 if found_imports and found_imports not in styles_imports_array:
-                    styles_imports_array.append(re.sub(';', '', found_imports))         # common-mixins; --> common-mixins
+                    styles_imports_array.append(re.sub(';', '', found_imports))     # common-mixins; --> common-mixins
 
     f1.close()
     if not styles_array:
@@ -206,6 +214,21 @@ def handle_styles_file(path):
                 styles_imports_array_path_checked.append(full_path)
             else:
                 check_log('import path doesn\'t exists: ' + full_path)
+
+    scan_js_array = []
+    if scanJS:
+        path_js = path.replace(stylesFile, jsFile)
+        if is_file_exist(path_js, 'js'):
+            with open(path_js, 'r') as f3:
+                js_data = f3.read().replace('\n', '')
+            f3.close()
+            found_js = re.findall(js_regex, js_data)
+            if found_js:
+                my_ind = [0]
+                for j in found_js:
+                    scan_js_array = [j[i] for i in my_ind]
+
+                check_log('\tFound such array of classes in js-file: ' + str(scan_js_array))
 
     return list(set(styles_array)), styles_imports_array_path_checked
 
@@ -234,7 +257,6 @@ def handle_template_file(path):
 
 def check_imports(templs, imports):
     for i in imports:
-        print('\tLookup for import: ', i)
         check_log('\tLookup for import: ' + i)
         with open(i, 'r') as im:
             im_data = im.read().replace('\n', '')
@@ -247,10 +269,21 @@ def check_imports(templs, imports):
             found_mixin = re.findall(current_regex, im_data)
             if found_class:
                 templs.remove(st)
-                check_log('\t...Found class ' + st + ' in import, removed from the comparison.')
+                check_log('\t...Found common class [' + st + '] in import, removed from the comparison.')
             if found_mixin:
                 templs.remove(st)
-                check_log('\t...Found mixin ' + st + ' in import, removed from the comparison.')
+                check_log('\t...Found common class as mixin [' + st + '] in import, removed from the comparison.')
+
+    return templs
+
+
+def check_js(templs):
+    global scan_js_array
+
+    for t in templs:
+        if t in scan_js_array:
+            templs.remove(t)
+            check_log('\t...Found common class [' + t + '] in js-file, removed from the comparison.')
 
     return templs
 
@@ -293,11 +326,15 @@ def format_output(name, array, file_type):
 
 
 def do_output():
-    global tableOutput, outputContent, outputHeaders
+    global tableOutput, outputContent, outputHeaders, onlyTable
 
     check_log('')
+    tabulate_output_run = tabulate(outputContent, headers=outputHeaders, tablefmt="psql")
     if tableOutput:
-        check_log(tabulate(outputContent, headers=outputHeaders, tablefmt="psql"))
+        check_log(tabulate_output_run)
+        if onlyTable:
+            print(tabulate_output_run)
+
     else:
         for oc in outputContent:
             if bool(''.join(oc[:1])):
@@ -306,10 +343,12 @@ def do_output():
 
 
 def init_main():
-    global subdir_arr, stylesFile, templateFile
+    global subdir_arr, stylesFile, templateFile, scanJS, scan_js_array
 
     for s in subdir_arr:
-        check_log('-------------------------------')
+        # s = s.replace('/./', '/')
+        current_dir = s.replace(scanDir, '')[:-1]
+        check_log('-------[ ' + current_dir + ' ]-------')
         styles_file_path = s + stylesFile
         template_file_path = s + templateFile
         f_template_exist = is_file_exist(template_file_path, 'template')
@@ -321,6 +360,8 @@ def init_main():
             d_template, d_styles = check_diff(template_list, styles_list)
             if styles_imports and d_template:
                 d_template = check_imports(d_template, styles_imports)
+            if scanJS and scan_js_array:
+                d_template = check_js(d_template)
             format_output(ad_name, d_template, 'template')
             format_output(ad_name, d_styles, 'styles')
         else:
