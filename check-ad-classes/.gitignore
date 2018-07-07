@@ -2,10 +2,6 @@
 .idea
 .vscode
 *.iml
-*.log
+# *.log
 
 node_modules/
-public/
-build/
-output.js
-aws-credentials.json

@@ -1,0 +1,38 @@
+/home/jacky/PycharmProjects/untitled/venv/bin/python /home/jacky/scripts/mypy/py/technodocbox-download/technodocbox.py
+
+performing GET request for URL: https://technodocbox.com/Unix/71105609-Useful-unix-commands-cheat-sheet.html
+with headers: {'Server': 'nginx', 'Date': 'Sat, 07 Jul 2018 09:58:10 GMT', 'Content-Type': 'text/html; charset=UTF-8', 'Transfer-Encoding': 'chunked', 'Connection': 'keep-alive', 'Set-Cookie': 'country=BY; domain=.technodocbox.com; path=/, d_id=60, uid=kEzs+1tAjrIJ4WadAwhtAg==; expires=Sun, 07-Jul-19 09:58:10 GMT; path=/', 'Content-Encoding': 'gzip'}
+finding link to pdftoword-converter ...
+link found:  http://pdftoword-converter.online/enter/?url=https://technodocbox.com/71105609-Unix/Useful-unix-commands-cheat-sheet.html
+
+performing GET request for URL: http://pdftoword-converter.online/enter/?url=https://technodocbox.com/71105609-Unix/Useful-unix-commands-cheat-sheet.html
+with headers: {'Server': 'nginx/1.12.2', 'Content-Type': 'text/html; charset=UTF-8', 'Transfer-Encoding': 'chunked', 'Connection': 'keep-alive', 'Cache-Control': 'no-cache, private', 'Date': 'Sat, 07 Jul 2018 09:58:10 GMT', 'Set-Cookie': 'XSRF-TOKEN=eyJpdiI6Iisrd1kycEZSQnR3ZzlqZDRCd0VoYXc9PSIsInZhbHVlIjoiR05ZTjZyS2ErYjk5bTIxZ3Q3eWwyek0wN2ZSS1NIQzRDZHFjU0pZcGx4M09uc3YrYTZjVmFHRmE2a0VZSXF2SUNpV2s4V0xcL21sXC9QVlNIU2NjN1k4UT09IiwibWFjIjoiYTYxMTUyYjk0Y2ZkNzkwZDY2OTM2NDBiYTg2OTVmM2Q1ZWFjYTI5NThmODliYjQ5ZmViYTM1NTYyNDY2MTg3MyJ9; expires=Sat, 07-Jul-2018 11:58:10 GMT; Max-Age=7200; path=/, pdf2jpg_session=eyJpdiI6InRoU2dnak51UVIzNmR3TWJJSlJIUWc9PSIsInZhbHVlIjoid3BXdE0xY3BORjhRYUwwcW5pWEFyNkMyeExxaGtiaG9LYjgwQlJuKzNVN3lcL1JnRUdvTDk4UnRuZVJ1U2dWNldRYXQ4SFwvQ0Fwb0d6V3JOUjc3RlgxZz09IiwibWFjIjoiMmYwZjUyNzE1MzdjOThjMDdmNWE4Mjc1MmE3OWVlOTZhMGY2ZjBmOWE4OGZhNDkzMWQ0ZmEyYTA2MTAxNGQ0YSJ9; expires=Sat, 07-Jul-2018 11:58:10 GMT; Max-Age=7200; path=/; httponly', 'X-Frame-Options': 'SAMEORIGIN', 'X-XSS-Protection': '1; mode=block', 'X-Content-Type-Options': 'nosniff'}
+finding link to converter storage ...
+link found:  /storage/documents/ab48878c0d462ea65d98fa275fad7e68.pdf
+Download link to PDF: http://pdftoword-converter.online/storage/documents/ab48878c0d462ea65d98fa275fad7e68.pdf
+
+----------
+
+performing GET request for URL: https://technodocbox.com/Unix/66519152-Learn-bash-the-hard-way.html
+with headers: {'Server': 'nginx', 'Date': 'Sat, 07 Jul 2018 10:05:06 GMT', 'Content-Type': 'text/html; charset=UTF-8', 'Transfer-Encoding': 'chunked', 'Connection': 'keep-alive', 'Set-Cookie': 'country=BY; domain=.technodocbox.com; path=/, d_id=60, uid=kEzs+1tAkFIO02avAwizAg==; expires=Sun, 07-Jul-19 10:05:06 GMT; path=/', 'Content-Encoding': 'gzip'}
+finding link to pdftoword-converter ...
+link found:  http://pdftoword-converter.online/enter/?url=https://technodocbox.com/66519152-Unix/Learn-bash-the-hard-way.html
+
+performing GET request for URL: http://pdftoword-converter.online/enter/?url=https://technodocbox.com/66519152-Unix/Learn-bash-the-hard-way.html
+with headers: {'Server': 'nginx/1.12.2', 'Content-Type': 'text/html; charset=UTF-8', 'Transfer-Encoding': 'chunked', 'Connection': 'keep-alive', 'Cache-Control': 'no-cache, private', 'Date': 'Sat, 07 Jul 2018 10:05:06 GMT', 'Set-Cookie': 'XSRF-TOKEN=eyJpdiI6IlppbkRzdkpCXC82UVpaOHFCN1BobzZBPT0iLCJ2YWx1ZSI6IjgzUTZxQlowbEVhb1ZUelpiTGlTeG15aWpYMEE0eWU2NGlTS3BXdk5uXC9CZFlKYUN1aVd2cU1lOWV3QURDWUVMM3ZcL3dmYndsQ1Y4bmtzcFFVUkhkMnc9PSIsIm1hYyI6ImU1ODYyZDFiYTQ5NTJmM2IyODQ5NDdlYzVmNTUwODYxODMzMmQwNzFmYmNkZjg4YmQwNWE5Zjg3M2M5NmNiZTEifQ%3D%3D; expires=Sat, 07-Jul-2018 12:05:06 GMT; Max-Age=7200; path=/, pdf2jpg_session=eyJpdiI6IlYwNVNWYlhvbkhlMVJkb0dXXC9BYjRnPT0iLCJ2YWx1ZSI6IkJ6NFAzZzZxV3hOcExmMCtoTWZGQTdSUllkWUI1VHlRcHRycjRlQjdmQVBmWXFqemxzekhMdXBFOUVDcWMyNlo3UjZiMnNiVEFmcDJnKzBzbThuUXlRPT0iLCJtYWMiOiI0NTg4MDIxNmZhYThkN2Q3ZmU0NWE2OTE4OTBhZmU2N2FhZjgxOWIxMmFmOWNhOGZlOWZhOTU2YjM3ZDA4ZTk5In0%3D; expires=Sat, 07-Jul-2018 12:05:06 GMT; Max-Age=7200; path=/; httponly', 'X-Frame-Options': 'SAMEORIGIN', 'X-XSS-Protection': '1; mode=block', 'X-Content-Type-Options': 'nosniff'}
+finding link to converter storage ...
+link found:  /storage/documents/be9ba10b52cf0dede47251fb89cf0ae1.pdf
+Download link to PDF: http://pdftoword-converter.online/storage/documents/be9ba10b52cf0dede47251fb89cf0ae1.pdf
+
+-----------
+
+performing GET request for URL: https://technodocbox.com/Unix/74202510-Answers-to-awk-problems-shell-programming-future-using-loops-to-automate-tasks-download-and-install-python-windows-only-r.html
+with headers: {'Server': 'nginx', 'Date': 'Sat, 07 Jul 2018 10:10:28 GMT', 'Content-Type': 'text/html; charset=UTF-8', 'Transfer-Encoding': 'chunked', 'Connection': 'keep-alive', 'Set-Cookie': 'country=BY; domain=.technodocbox.com; path=/, d_id=60, uid=kEzs+1tAkZQAjGaJAxCoAg==; expires=Sun, 07-Jul-19 10:10:28 GMT; path=/', 'Content-Encoding': 'gzip'}
+finding link to pdftoword-converter ...
+link found:  http://pdftoword-converter.online/enter/?url=https://technodocbox.com/74202510-Unix/Answers-to-awk-problems-shell-programming-future-using-loops-to-automate-tasks-download-and-install-python-windows-only-r.html
+
+performing GET request for URL: http://pdftoword-converter.online/enter/?url=https://technodocbox.com/74202510-Unix/Answers-to-awk-problems-shell-programming-future-using-loops-to-automate-tasks-download-and-install-python-windows-only-r.html
+with headers: {'Server': 'nginx/1.12.2', 'Content-Type': 'text/html; charset=UTF-8', 'Transfer-Encoding': 'chunked', 'Connection': 'keep-alive', 'Cache-Control': 'no-cache, private', 'Date': 'Sat, 07 Jul 2018 10:10:29 GMT', 'Set-Cookie': 'XSRF-TOKEN=eyJpdiI6InVkV3VVeHpLYWYwUGhiNG5yeDE5MUE9PSIsInZhbHVlIjoiQ01UbUxLTEpqdlZGb2RYejc1RVdtMzdOc04xOGh0RU9RaEIzSnFYQWpSaHNENjFnang1UzRJbjZWNGtOUFY1UXJ6R2lFM1FUSW5lV0djQkFkaFJ2dFE9PSIsIm1hYyI6IjA1ZTM5ZWJlNTZhMjllOTZmYzIxZDhjOThmZmEzNDlhOWZkODIyNTNhOThkZDUwODVkYmVkODY1ODE2NTFlNTkifQ%3D%3D; expires=Sat, 07-Jul-2018 12:10:29 GMT; Max-Age=7200; path=/, pdf2jpg_session=eyJpdiI6IjIzNkx6eE1pMVZ1cUFYUGhjbzlZS1E9PSIsInZhbHVlIjoiVER5cFp3bjZ6bE02b1B6Qjd4QzdBWHc5bDE0K2RnRm9icWhCRWk0QTN2TUp6SVJWXC9zYUQ2OXd3cW0zSmZlM1ZQMGtGSFFVekc2WGhiTStMclZXdTFnPT0iLCJtYWMiOiIwYTNjYmViYjcwNGY0NWVlMDVjMzdlM2MxNzczMzY0NDk3YThhZTAzNzliZGFhZmI1ZjVkZWIyNzg1YTM1ODQ4In0%3D; expires=Sat, 07-Jul-2018 12:10:29 GMT; Max-Age=7200; path=/; httponly', 'X-Frame-Options': 'SAMEORIGIN', 'X-XSS-Protection': '1; mode=block', 'X-Content-Type-Options': 'nosniff'}
+finding link to converter storage ...
+link found:  /storage/documents/b42aeddfc959a36065e5c32db52569b5.pdf
+Download link to PDF: http://pdftoword-converter.online/storage/documents/b42aeddfc959a36065e5c32db52569b5.pdf
