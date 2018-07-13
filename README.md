@@ -17,4 +17,8 @@ Examples:
     https://technodocbox.com/Unix/71105609-Useful-unix-commands-cheat-sheet.html
     ---> http://pdftoword-converter.online/storage/documents/ab48878c0d462ea65d98fa275fad7e68.pdf
 
-3. 
+3. XML to CSV converter
+Remake of the upwork task [https://github.com/jackpts/upwork/tree/master/002] from bash scripting to python version 
+(using modules: xmltodict, csv).
+
+4. 
