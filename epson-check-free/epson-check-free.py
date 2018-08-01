@@ -13,6 +13,8 @@ qa_api = 'https://ee-qa2.softeq.net/rest/api/sncheck/'
 book = './SN_list_with_country.xlsx'
 
 regex = 'status\":\"(.*)\",\"epson\":'
+# TODO: set min-max interval of scanning via Arguments
+max_scan = 20
 
 
 def get_request(url):
@@ -39,7 +41,7 @@ def check_response(sn):
 arguments = sys.argv[1:]
 print('Please specify Epson serial numbers as a parameters')
 print('\tExample: python epson-check-free.py S9VY082652 X2MX039192')
-print('OR download and put the ' + book[2:] + ' file near this script!')
+print('OR download and put the ' + book[2:] + ' file close to this script!')
 print('-------------------------')
 
 if arguments.__len__() > 0:
@@ -54,10 +56,9 @@ elif os.path.exists(book):
     wb.sheet_names()
     sh = wb.sheet_by_index(0)
     i = 1
-    j = 20
 
     try:
-        while sh.cell(i, 4).value != 0 and i < j:
+        while sh.cell(i, 4).value != 0 and i < max_scan:
             Load = sh.cell(i, 4).value
             check_response(Load)
             i += 1
