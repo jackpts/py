@@ -103,8 +103,11 @@ def set_number(s):
 
 if arguments.__len__() > 0:
     # print('Arguments found: ' + str(arguments))
-    if arguments.index('--log') > -1:
-        log_to_file = True
+    try:
+        if arguments.index('--log') > -1:
+            log_to_file = True
+    except ValueError:
+        pass
 
     if arguments.__len__() == 1 and log_to_file is True:
         check_book(min_scan, max_scan)
