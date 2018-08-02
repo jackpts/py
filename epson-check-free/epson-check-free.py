@@ -12,15 +12,46 @@ qa_api = 'https://ee-qa2.softeq.net/rest/api/sncheck/'
 # url_api = qa_api + sn + '/GB/en'
 book = './SN_list_with_country.xlsx'
 
-regex = 'status\":\"(.*)\",\"epson\":'
-# TODO: set min-max interval of scanning via Arguments
+regex_response = 'status\":\"(.*)\",\"epson\":'
+regex_min = '--scan-range:(\d+)'
+regex_max = '--scan-range:\d+-(\d+)'
+min_scan = 1
 max_scan = 20
+column_w_serials = 4
+infinite = 9999
 
 
 def get_request(url):
     # print('\nperforming GET request for URL: ' + url)
     r = requests.get(url)
     return r.text
+
+
+def check_book(min=None, max=None):
+    global book
+    if not os.path.exists(book):
+        print('Excel-file not found!')
+        return
+    if min is None and max is None:
+        min = 1
+        max = infinite      # aka Infinite
+
+    print('Excel file exists - start scanning with Range: (' + str(min) + ' - ' + str(max) + ')')
+    wb = xlrd.open_workbook(os.path.join(book))
+    wb.sheet_names()
+    sh = wb.sheet_by_index(0)
+
+    try:
+        while sh.cell(min, column_w_serials).value != 0 and min < max + 1:
+            if max != infinite:
+                load = sh.cell(min, column_w_serials).value
+                check_response(load)
+            min += 1
+    except IndexError:
+        pass
+
+    if max == infinite:
+        print('Total number of serials in Excel-file: ' + str(min))
 
 
 def check_response(sn):
@@ -31,7 +62,7 @@ def check_response(sn):
     response = get_request(checked_url)
     # print('resp: ' + response)
     if response:
-        found = re.findall(regex, response)
+        found = re.findall(regex_response, response)
         if found[0]:
             print(sn + '\t' + found[0])
         else:
@@ -40,29 +71,36 @@ def check_response(sn):
 
 arguments = sys.argv[1:]
 print('Please specify Epson serial numbers as a parameters')
-print('\tExample: python epson-check-free.py S9VY082652 X2MX039192')
-print('OR download and put the ' + book[2:] + ' file close to this script!')
-print('-------------------------')
+print('OR download and put the ' + book[2:] + ' file close to this script.')
+print('Examples:')
+print('\t python epson-check-free.py S9VY082652 X2MX039192')
+print('\t python epson-check-free.py --scan-range:200-250')
+print('\t python epson-check-free.py --count-records')
+# print('\t Please specify the scanning records min-max (1-1300) as a parameter:')
+# print('\t (There are 1-20 records to scan by default)')
+print('---------')
+
+
+def set_number(s):
+    try:
+        int(s)
+        return int(s)
+    except ValueError:
+        return None
+
 
 if arguments.__len__() > 0:
     # print('Arguments found: ' + str(arguments))
     for a in arguments:
-        if len(a) == 10:
+        arg_len = len(a)
+        if a == '--count-records':
+            check_book()
+        if a[:13] == '--scan-range:':
+            min_s = re.findall(regex_min, a)
+            max_s = re.findall(regex_max, a)
+            check_book(set_number(min_s[0]), set_number(max_s[0]))
+        if arg_len == 10:
             check_response(a)
-
-elif os.path.exists(book):
-    # print('xls File exists - start scanning...')
-    wb = xlrd.open_workbook(os.path.join(book))
-    wb.sheet_names()
-    sh = wb.sheet_by_index(0)
-    i = 1
-
-    try:
-        while sh.cell(i, 4).value != 0 and i < max_scan:
-            Load = sh.cell(i, 4).value
-            check_response(Load)
-            i += 1
-    except IndexError:
-        pass
 else:
-    print('No parameters specified and Excel-file not found!')
+    check_book(min_scan, max_scan)
+

@@ -27,24 +27,40 @@ You can specify the numbers to check as an input parameters or put the download 
 
 Examples:
 
-```
     > python epson-check-free.py S9VY082652 X2MX039192
     Please specify Epson serial numbers as a parameters
-        Example: python epson-check-free.py S9VY082652 X2MX039192
-    OR download and put the /SN_list_with_country.xlsx file near this script!
-    S9VY082652	ALREADY_USED
-    X2MX039192	SUCCESSFUL
-
-    >epson-check-free.py
+    OR download and put the SN_list_with_country.xlsx file close to this script.
+    Examples:
+             python epson-check-free.py S9VY082652 X2MX039192
+             python epson-check-free.py --scan-range:200-250
+             python epson-check-free.py --count-records
+    ---------
+    S9VY082652      ALREADY_USED
+    X2MX039192      SUCCESSFUL
+    
+    > python epson-check-free.py --count-records
     Please specify Epson serial numbers as a parameters
-        Example: python epson-check-free.py S9VY082652 X2MX039192
-    OR download and put the SN_list_with_country.xlsx file close to this script!
-    -------------------------
-    xls File exists - start scanning...
+    OR download and put the SN_list_with_country.xlsx file close to this script.
+    Examples:
+             python epson-check-free.py S9VY082652 X2MX039192
+             python epson-check-free.py --scan-range:200-250
+             python epson-check-free.py --count-records
+    ---------
+    Excel file exists - start scanning with Range: (1 - 9999)
+    Total number of serials in Excel-file: 1340
+
+    > python epson-check-free.py
+    Please specify Epson serial numbers as a parameters
+    OR download and put the SN_list_with_country.xlsx file close to this script.
+    Examples:
+             python epson-check-free.py S9VY082652 X2MX039192
+             python epson-check-free.py --scan-range:200-250
+             python epson-check-free.py --count-records
+    ---------
+    Excel file exists - start scanning with Range: (1 - 20)
     S9VY082652	ALREADY_USED
     X2MX039192	SUCCESSFUL
     NASY203682	SERIAL_NUMBER_NOT_ELIGIBLE
     ...
-```
 
 ## 5. 
