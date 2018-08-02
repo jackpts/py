@@ -19,6 +19,8 @@ min_scan = 1
 max_scan = 20
 column_w_serials = 4
 infinite = 9999
+log_to_file = False
+sn_array = []
 
 
 def get_request(url):
@@ -28,7 +30,7 @@ def get_request(url):
 
 
 def check_book(min=None, max=None):
-    global book
+    global book, log_to_file, sn_array
     if not os.path.exists(book):
         print('Excel-file not found!')
         return
@@ -53,8 +55,15 @@ def check_book(min=None, max=None):
     if max == infinite:
         print('Total number of serials in Excel-file: ' + str(min))
 
+    if log_to_file is True and len(sn_array) > 0:
+        with open("epson_serials.log", "w") as log_file:
+            for sn in sn_array:
+                log_file.write(sn + '\n')
+        print('\nLOG file epson_serials.log has been updated with ' + str(len(sn_array)) + ' records')
+
 
 def check_response(sn):
+    global sn_array
     # responses:
     # {"status":"ALREADY_USED","epson":false,"rootChannelLogoUrl":"http://ee-qa2.softeq.net/service/rest/api/up/logo"}
     # {"status":"SUCCESSFUL","epson":true,"channelName":"Epson IRS", ...
@@ -64,7 +73,9 @@ def check_response(sn):
     if response:
         found = re.findall(regex_response, response)
         if found[0]:
-            print(sn + '\t' + found[0])
+            out_str = sn + '\t' + found[0]
+            print(out_str)
+            sn_array.append(out_str)
         else:
             print(sn + '\t !!wrong response!!')
 
@@ -76,6 +87,7 @@ print('Examples:')
 print('\t python epson-check-free.py S9VY082652 X2MX039192')
 print('\t python epson-check-free.py --scan-range:200-250')
 print('\t python epson-check-free.py --count-records')
+print('\t python epson-check-free.py --log')
 # print('\t Please specify the scanning records min-max (1-1300) as a parameter:')
 # print('\t (There are 1-20 records to scan by default)')
 print('---------')
@@ -91,16 +103,22 @@ def set_number(s):
 
 if arguments.__len__() > 0:
     # print('Arguments found: ' + str(arguments))
-    for a in arguments:
-        arg_len = len(a)
-        if a == '--count-records':
-            check_book()
-        if a[:13] == '--scan-range:':
-            min_s = re.findall(regex_min, a)
-            max_s = re.findall(regex_max, a)
-            check_book(set_number(min_s[0]), set_number(max_s[0]))
-        if arg_len == 10:
-            check_response(a)
+    if arguments.index('--log') > -1:
+        log_to_file = True
+
+    if arguments.__len__() == 1 and log_to_file is True:
+        check_book(min_scan, max_scan)
+    else:
+        for a in arguments:
+            arg_len = len(a)
+            if a == '--count-records':
+                check_book()
+            if a[:13] == '--scan-range:':
+                min_s = re.findall(regex_min, a)
+                max_s = re.findall(regex_max, a)
+                check_book(set_number(min_s[0]), set_number(max_s[0]))
+            if arg_len == 10:
+                check_response(a)
 else:
     check_book(min_scan, max_scan)
 
