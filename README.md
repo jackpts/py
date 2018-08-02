@@ -91,4 +91,6 @@ Examples:
     X2MX039192      SUCCESSFUL
     NASY203682      SERIAL_NUMBER_NOT_ELIGIBLE
 
+    LOG file epson_serials.log has been updated with 2 records
+
 ## 5. 
