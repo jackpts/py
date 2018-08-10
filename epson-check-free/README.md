@@ -4,7 +4,15 @@
 Check free serial numbers available for Epson printers.
 You can specify the numbers to check as an input parameters or put the download excel file with these numbers close to the script.
 
-Examples:
+*Run*:
+
+	git clone https://github.com/jackpts/py/tree/master/epson-check-free
+	cd epson-check-free
+	pip install -r requirements.txt
+	chmod +x epson-check-free.py
+	python epson-check-free.py
+
+*Examples*:
 
     > python epson-check-free.py S9VY082652 X2MX039192
     Please specify Epson serial numbers as a parameters
