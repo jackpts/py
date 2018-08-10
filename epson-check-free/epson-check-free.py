@@ -90,7 +90,7 @@ print('\t python epson-check-free.py --count-records')
 print('\t python epson-check-free.py --log')
 # print('\t Please specify the scanning records min-max (1-1300) as a parameter:')
 # print('\t (There are 1-20 records to scan by default)')
-print('---------')
+print('-'*9)
 
 
 def set_number(s):
